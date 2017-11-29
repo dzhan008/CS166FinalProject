@@ -1,0 +1,6 @@
+#! /bin/bash
+
+export PGFOLDER=/tmp/$LOGNAME
+export PGDATA=$PGFOLDER/myDB/data
+
+pg_ctl status

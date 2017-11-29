@@ -1,0 +1,26 @@
+INSTRUCTIONS
+
+1) initdb.sh
+creates necessary folders and initializes database. Copies csv files under /tmp/$LOGNAME/myDB/data
+
+2) start.sh <port> 
+start database
+Example: ./start.sh 7432
+
+3) createdb.sh <port> <dbname>
+create database. drop will create an error first time of execution only
+Example: ./createdb.sh 7432
+
+4) createtb.sh
+creates schema and inserts data from csv files by calling create.sql script. It also creates a user that access the created table
+Choose preferred credentials when creating user by altering the createtb.sh
+Example: ./createtb.sh 7432
+
+5) stop.sh
+stops database server
+Example: ./stop.sh 7432
+
+
+Execute above scripts in order, first initialized your environment, start your database, create your schema, and then create your tables.
+The scripts are fully tested and should work. Check each one individually and make sure your understand what each is responsible for.
+

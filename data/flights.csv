@@ -1,0 +1,499 @@
+26,JGA724,Berlin,Madrid,Airbus A320,200,3
+35,AAR100,Minsk,Moscow,Boeing 737,210,3
+2,AGA566,Boston,Honolulu,Boeing 747,280,8
+17,ATA808,Lisbon,Mexico City,Boeing 757,300,12
+1,KLM155,Milan,Moscow,Airbus A330,230,6
+23,AAS836,Vienna,Havana,Boeing 787,242,8
+40,AAE997,Lisbon,Rome,Lockheed 1011,400,3
+38,AMA745,Frankfurt,New York,Airbus 380,475,10
+26,JGA108,Mexico City,Brussels,Lockheed 1011,400,15
+19,ALT117,Johannesburg,Hamburg,Airbus 380,475,8
+8,SA502,Vienna,Minsk,Airbus 380,475,8
+17,ATA897,Sydney,Stockholm,Airbus A330,230,18
+28,ANZ771,Manchester,Sydney,Boeing 787,242,22
+35,AAR402,Sydney,Bocota,Lockheed 1011,400,14
+45,AL860,Phoenix,Kolkata,Boeing 737,210,16
+34,ASA291,Tokyo,Hamburg,Boeing 747,280,19
+46,SCR708,Johannesburg,Havana,Boeing 757,300,10
+41,ADA668,Havana,Buenos Aires,Airbus A330,230,16
+51,AKA859,Frankfurt,Barcelona,Boeing 787,242,2
+33,AS312,Milan,Alexandria,Lockheed 1011,400,19
+36,AAR735,Johannesburg,Stockholm,Airbus 380,475,7
+26,JGA687,Sydney,Vienna,Boeing 747,280,18
+22,JA957,Rio De Janeiro,Vienna,Boeing 757,300,16
+1,KLM688,San Francisco,Moscow,Boeing 737,210,8
+3,AF804,Vancouver,Hamburg,Boeing 747,280,12
+45,AL505,Frankfurt,Milan,Airbus A320,200,13
+29,AC220,Mexico City,Rome,Boeing 737,210,14
+11,AB950,Buenos Aires,Paris,Boeing 747,280,16
+4,DA291,Madrid,Buenos Aires,Boeing 757,300,17
+26,JGA487,Berlin,Minsk,Airbus A330,230,12
+43,AUA113,Bocota,Beijing,Boeing 787,242,6
+36,AAR324,Madrid,Seattle,Airbus 380,475,10
+1,KLM183,Stockholm,Moscow,Airbus A320,200,7
+26,JGA307,Manchester,New York,Airbus A320,200,14
+13,EA989,Rio De Janeiro,Saint Petersburg,Airbus A320,200,17
+50,ARM888,Manchester,Milan,Boeing 737,210,14
+14,IB333,Honolulu,Paris,Boeing 747,280,5
+20,CA847,Hamburg,Detroit,Boeing 757,300,14
+9,VA876,Paris,Honolulu,Airbus A330,230,16
+24,AL747,Honolulu,Alexandria,Airbus A320,200,22
+13,EA997,Vienna,Havana,Airbus A320,200,4
+27,VGA781,Tokyo,Pretoria,Airbus A320,200,20
+36,AAR586,Denver,Athens,Boeing 737,210,3
+43,AUA920,Barcelona,Berlin,Boeing 747,280,18
+31,CSA439,Moscow,Sydney,Boeing 757,300,14
+14,IB788,Casablanca,Frankfurt,Airbus A330,230,4
+46,SCR633,Lisbon,Milan,Boeing 787,242,21
+38,AMA889,Honolulu,Washington D.C.,Airbus 380,475,4
+42,SAA111,Washington D.C.,New York,Lockheed 1011,400,5
+37,AVA100,Portland,Athens,Airbus 380,475,13
+44,AH307,Washington D.C.,Sydney,Airbus A320,200,7
+43,AUA323,Portland,Chicago,Airbus A320,200,3
+45,AL979,Moscow,Mexico City,Boeing 737,210,13
+18,AI162,Buenos Aires,London,Boeing 747,280,7
+43,AUA213,Buenos Aires,Beijing,Boeing 757,300,18
+32,SAR583,Sydney,Barcelona,Airbus A320,200,9
+39,ACR847,Washington D.C.,Frankfurt,Boeing 737,210,15
+13,EA159,Rio De Janeiro,Boston,Boeing 747,280,10
+32,SAR467,Beijing,Dallas,Lockheed 1011,400,16
+19,ALT294,Minsk,Madrid,Airbus 380,475,11
+2,AGA308,Seattle,Tokyo,Airbus A320,200,8
+19,ALT828,Hamburg,Montreal,Boeing 737,210,7
+5,UA749,Los Angeles,Berlin,Boeing 747,280,4
+45,AL653,Alexandria,Dallas,Boeing 737,210,7
+36,AAR197,Athens,Cairo,Boeing 747,280,4
+11,AB824,Minsk,Athens,Boeing 757,300,9
+14,IB567,Barcelona,Boston,Airbus A320,200,12
+37,AVA789,Los Angeles,Barcelona,Airbus A320,200,12
+50,ARM284,Kolkata,Alexandria,Airbus A320,200,8
+34,ASA764,Pretoria,Johannesburg,Boeing 737,210,15
+29,AC148,Buenos Aires,London,Boeing 737,210,15
+23,AAS140,Casablanca,Rio De Janeiro,Boeing 747,280,22
+0,LH560,Manchester,Vienna,Boeing 737,210,11
+29,AC998,Phoenix,Manchester,Boeing 747,280,19
+19,ALT650,Buenos Aires,New York,Lockheed 1011,400,2
+40,AAE602,Milan,Tokyo,Airbus 380,475,7
+3,AF360,Cape Town,Casablanca,Airbus 380,475,7
+34,ASA514,Seoul,Denver,Boeing 737,210,20
+28,ANZ746,San Francisco,Milan,Boeing 747,280,4
+11,AB242,Buenos Aires,Stockholm,Airbus A320,200,7
+13,EA293,Alexandria,Cairo,Boeing 737,210,13
+1,KLM170,Vienna,Hamburg,Boeing 747,280,20
+29,AC257,Los Angeles,Cairo,Boeing 757,300,9
+24,AL321,Paris,Beijing,Boeing 737,210,15
+50,ARM539,Moscow,Vienna,Boeing 747,280,17
+42,SAA320,Sydney,Brussels,Lockheed 1011,400,11
+38,AMA302,Vancouver,Minsk,Airbus 380,475,3
+27,VGA149,Saint Petersburg,Seattle,Airbus 380,475,11
+24,AL662,Casablanca,Mexico City,Lockheed 1011,400,15
+21,AJ183,Paris,Munbai,Airbus 380,475,19
+36,AAR308,Denver,Moscow,Airbus A320,200,4
+52,JB243,Havana,Rio De Janeiro,Airbus A320,200,13
+16,BA949,Boston,Sydney,Boeing 737,210,16
+17,ATA904,Manchester,Paris,Boeing 747,280,10
+26,JGA721,Lisbon,Rome,Boeing 757,300,18
+32,SAR175,Kolkata,Saint Petersburg,Airbus A320,200,16
+9,VA274,Honolulu,Seattle,Boeing 737,210,5
+47,TRA318,Minsk,Madrid,Boeing 747,280,13
+34,ASA957,Seoul,Munbai,Lockheed 1011,400,7
+2,AGA508,Saint Petersburg,Tokyo,Airbus 380,475,21
+44,AH342,Honolulu,Dallas,Boeing 747,280,5
+0,LH581,Moscow,Madrid,Lockheed 1011,400,6
+3,AF579,Minsk,Stockholm,Airbus 380,475,15
+10,AC615,Saint Petersburg,Denver,Airbus 380,475,3
+1,KLM319,Moscow,Rome,Boeing 747,280,19
+24,AL297,Vienna,Bocota,Lockheed 1011,400,10
+16,BA686,Lisbon,San Francisco,Airbus 380,475,22
+19,ALT452,Washington D.C.,Sydney,Airbus 380,475,6
+20,CA893,Denver,Alexandria,Boeing 747,280,6
+27,VGA169,Madrid,Kolkata,Boeing 757,300,21
+44,AH502,Pretoria,Buenos Aires,Airbus 380,475,4
+42,SAA618,Brussels,Seoul,Airbus A320,200,5
+31,CSA330,Johannesburg,Boston,Airbus A320,200,8
+1,KLM657,Seoul,Cape Town,Airbus 380,475,16
+25,AT673,Rome,Havana,Airbus 380,475,2
+1,KLM505,Johannesburg,Washington D.C.,Airbus 380,475,3
+27,VGA934,Seattle,Athens,Airbus A320,200,13
+24,AL903,Phoenix,Washington D.C.,Airbus A320,200,21
+7,HW445,Austin,Minsk,Boeing 747,280,7
+14,IB461,Seattle,Buenos Aires,Boeing 747,280,20
+22,JA871,Mexico City,Tokyo,Lockheed 1011,400,22
+39,ACR694,Saint Petersburg,London,Airbus 380,475,17
+20,CA622,Pretoria,Kolkata,Boeing 747,280,14
+38,AMA519,Saint Petersburg,San Francisco,Lockheed 1011,400,22
+48,AB589,Barcelona,Cape Town,Airbus 380,475,19
+12,OA811,Chicago,Frankfurt,Lockheed 1011,400,8
+34,ASA647,Phoenix,Casablanca,Airbus 380,475,3
+14,IB251,Rio De Janeiro,Minsk,Airbus 380,475,3
+51,AKA495,Portland,Dallas,Boeing 747,280,12
+47,TRA183,Mexico City,Moscow,Lockheed 1011,400,2
+44,AH987,Mexico City,Sydney,Airbus 380,475,11
+2,AGA628,Milan,San Francisco,Airbus 380,475,3
+0,LH591,Detroit,Buenos Aires,Boeing 747,280,11
+26,JGA305,Paris,Munbai,Airbus 380,475,19
+47,TRA718,Seoul,Milan,Airbus 380,475,3
+11,AB808,San Francisco,Austin,Airbus A320,200,15
+47,TRA794,Phoenix,Buenos Aires,Boeing 737,210,11
+11,AB283,Boston,Casablanca,Boeing 747,280,7
+20,CA239,Seoul,Seattle,Boeing 737,210,19
+49,AM228,Phoenix,Athens,Boeing 747,280,13
+30,CEA177,Cape Town,Austin,Boeing 747,280,22
+40,AAE445,Stockholm,Vienna,Boeing 737,210,10
+37,AVA545,Beijing,Munbai,Boeing 747,280,18
+53,CUB550,New York,Rio De Janeiro,Lockheed 1011,400,7
+53,CUB954,Tokyo,Detroit,Airbus 380,475,7
+25,AT697,Johannesburg,Detroit,Airbus 380,475,18
+38,AMA196,London,Stockholm,Boeing 747,280,13
+23,AAS857,Brussels,Austin,Boeing 737,210,8
+38,AMA397,Vancouver,Barcelona,Boeing 747,280,5
+24,AL612,Barcelona,Havana,Lockheed 1011,400,10
+44,AH618,Phoenix,Portland,Airbus 380,475,3
+4,DA369,Manchester,Chicago,Airbus 380,475,15
+0,LH874,Moscow,Stockholm,Boeing 747,280,14
+38,AMA180,Chicago,Munbai,Boeing 747,280,11
+31,CSA163,Kolkata,Lisbon,Boeing 737,210,17
+14,IB903,Lisbon,Madrid,Boeing 747,280,22
+33,AS813,Denver,Buenos Aires,Airbus A320,200,6
+10,AC243,Portland,Barcelona,Boeing 737,210,8
+49,AM415,Vancouver,Alexandria,Boeing 747,280,18
+10,AC759,Denver,Honolulu,Airbus 380,475,18
+33,AS678,Manchester,Phoenix,Airbus 380,475,10
+21,AJ783,Detroit,Casablanca,Lockheed 1011,400,14
+27,VGA236,New York,Hamburg,Airbus 380,475,11
+6,AA259,Tokyo,Boston,Airbus 380,475,7
+44,AH911,Brussels,Seoul,Boeing 747,280,7
+2,AGA541,Munbai,Honolulu,Airbus A320,200,22
+3,AF358,Frankfurt,Kolkata,Boeing 737,210,22
+6,AA972,Paris,Milan,Boeing 747,280,17
+44,AH386,Seoul,Frankfurt,Boeing 747,280,16
+10,AC207,Stockholm,Buenos Aires,Airbus A320,200,4
+23,AAS219,Minsk,Saint Petersburg,Boeing 737,210,17
+19,ALT668,San Francisco,Paris,Boeing 747,280,14
+29,AC265,Pretoria,Bocota,Airbus 380,475,12
+5,UA332,Buenos Aires,New York,Boeing 747,280,20
+49,AM157,Washington D.C.,Barcelona,Airbus A320,200,8
+20,CA504,Milan,Portland,Boeing 737,210,9
+41,ADA761,Minsk,Rome,Boeing 747,280,8
+34,ASA671,Los Angeles,Phoenix,Airbus 380,475,13
+4,DA805,Saint Petersburg,Havana,Airbus 380,475,9
+6,AA230,Honolulu,Vienna,Boeing 737,210,14
+26,JGA238,London,Washington D.C.,Boeing 747,280,13
+45,AL343,Cape Town,New York,Airbus 380,475,17
+35,AAR271,Washington D.C.,Athens,Boeing 747,280,22
+12,OA254,Paris,Cairo,Boeing 747,280,9
+48,AB266,Tokyo,Seattle,Airbus 380,475,15
+24,AL639,Stockholm,Washington D.C.,Airbus 380,475,3
+3,AF180,Saint Petersburg,San Francisco,Boeing 737,210,20
+13,EA868,Madrid,Mexico City,Boeing 747,280,20
+33,AS150,Moscow,Boston,Airbus 380,475,4
+35,AAR120,Vienna,Moscow,Airbus 380,475,3
+2,AGA361,Rio De Janeiro,Munbai,Boeing 737,210,14
+26,JGA814,Bocota,Madrid,Boeing 747,280,7
+39,ACR670,Seattle,Paris,Airbus 380,475,21
+23,AAS605,Beijing,Frankfurt,Boeing 747,280,20
+24,AL425,Madrid,Portland,Boeing 747,280,8
+23,AAS739,Cape Town,Honolulu,Airbus 380,475,17
+42,SAA560,Dallas,Milan,Airbus 380,475,15
+47,TRA994,Rome,Hamburg,Boeing 737,210,14
+14,IB519,Buenos Aires,Honolulu,Airbus A320,200,6
+2,AGA479,Vienna,Rome,Boeing 737,210,15
+6,AA480,Manchester,Sydney,Boeing 747,280,8
+42,SAA162,Manchester,Madrid,Airbus 380,475,19
+38,AMA1000,Berlin,Casablanca,Boeing 747,280,14
+0,LH609,Moscow,Frankfurt,Boeing 747,280,5
+37,AVA277,Stockholm,Madrid,Airbus 380,475,8
+18,AI234,San Francisco,Mexico City,Airbus 380,475,9
+47,TRA799,Hamburg,San Francisco,Boeing 737,210,21
+13,EA686,Honolulu,Honolulu,Boeing 747,280,22
+24,AL672,Manchester,Chicago,Boeing 747,280,3
+39,ACR663,Los Angeles,Athens,Boeing 747,280,5
+46,SCR497,Athens,Havana,Airbus 380,475,22
+35,AAR344,Chicago,Moscow,Airbus 380,475,3
+7,HW886,San Francisco,San Francisco,Airbus 380,475,7
+6,AA653,Paris,Portland,Airbus 380,475,20
+51,AKA369,Milan,Milan,Airbus 380,475,20
+16,BA492,Seoul,Boston,Airbus 380,475,11
+26,JGA538,Washington D.C.,Hamburg,Boeing 737,210,14
+28,ANZ967,Moscow,Paris,Boeing 747,280,10
+26,JGA264,Seattle,Frankfurt,Airbus 380,475,20
+3,AF537,Frankfurt,London,Boeing 747,280,12
+27,VGA557,Phoenix,Beijing,Boeing 747,280,5
+34,ASA185,Alexandria,Madrid,Airbus 380,475,8
+30,CEA810,Casablanca,Tokyo,Airbus 380,475,22
+0,LH339,Montreal,Denver,Boeing 737,210,16
+14,IB378,Seattle,Cape Town,Airbus A320,200,12
+51,AKA846,Sydney,Minsk,Airbus A330,230,8
+12,OA227,Denver,Buenos Aires,Boeing 787,242,17
+29,AC124,Honolulu,Kolkata,Lockheed 1011,400,22
+25,AT904,Manchester,Rio De Janeiro,Airbus 380,475,12
+24,AL172,Montreal,Manchester,Airbus 380,475,10
+51,AKA437,Lisbon,Mexico City,Airbus 380,475,22
+11,AB591,Munbai,Seoul,Airbus 380,475,5
+4,DA897,Munbai,Seoul,Airbus 380,475,13
+22,JA327,Madrid,New York,Airbus 380,475,10
+13,EA161,London,Johannesburg,Boeing 737,210,4
+39,ACR866,Montreal,Berlin,Boeing 747,280,6
+7,HW834,Dallas,Washington D.C.,Airbus 380,475,14
+43,AUA334,Paris,Athens,Boeing 747,280,18
+44,AH975,Pretoria,Manchester,Boeing 747,280,18
+45,AL842,Frankfurt,Cape Town,Boeing 737,210,14
+42,SAA221,Kolkata,Johannesburg,Boeing 747,280,16
+10,AC816,Beijing,San Francisco,Airbus 380,475,19
+26,JGA237,Milan,Detroit,Boeing 747,280,12
+20,CA161,Honolulu,Seoul,Boeing 747,280,18
+27,VGA141,Moscow,Paris,Boeing 737,210,21
+14,IB462,Portland,Milan,Boeing 747,280,4
+23,AAS746,Beijing,Austin,Airbus 380,475,9
+0,LH987,Kolkata,Athens,Boeing 747,280,18
+1,KLM161,Rio De Janeiro,Johannesburg,Boeing 747,280,16
+52,JB170,London,Alexandria,Boeing 747,280,2
+14,IB647,Los Angeles,Brussels,Boeing 737,210,17
+11,AB336,Cape Town,Detroit,Boeing 747,280,18
+48,AB380,Bocota,Mexico City,Airbus 380,475,17
+25,AT699,Barcelona,Saint Petersburg,Boeing 747,280,18
+50,ARM236,Bocota,Sydney,Boeing 747,280,13
+8,SA721,Paris,Hamburg,Airbus 380,475,22
+20,CA654,Cape Town,Seattle,Airbus 380,475,15
+34,ASA861,Phoenix,Moscow,Airbus 380,475,3
+12,OA504,Manchester,Athens,Boeing 737,210,17
+38,AMA809,San Francisco,Athens,Boeing 747,280,19
+35,AAR520,Minsk,Chicago,Airbus 380,475,6
+26,JGA207,Madrid,Washington D.C.,Airbus 380,475,6
+1,KLM256,Vienna,Kolkata,Airbus 380,475,8
+20,CA196,Beijing,San Francisco,Airbus 380,475,9
+46,SCR724,Milan,Bocota,Boeing 737,210,3
+37,AVA627,Madrid,Casablanca,Boeing 747,280,12
+51,AKA444,Paris,Stockholm,Airbus 380,475,4
+26,JGA921,San Francisco,Saint Petersburg,Airbus 380,475,6
+13,EA985,Chicago,Alexandria,Airbus 380,475,7
+21,AJ132,Milan,Beijing,Airbus 380,475,3
+26,JGA246,Buenos Aires,Stockholm,Boeing 737,210,20
+21,AJ544,Cairo,Rome,Boeing 747,280,11
+16,BA402,Cairo,Milan,Airbus 380,475,14
+34,ASA395,Bocota,Seoul,Airbus 380,475,10
+9,VA841,Saint Petersburg,Austin,Boeing 747,280,20
+27,VGA973,Washington D.C.,Cairo,Boeing 747,280,13
+27,VGA102,Mexico City,Dallas,Boeing 747,280,8
+18,AI545,Kolkata,Casablanca,Boeing 747,280,8
+3,AF257,Milan,Brussels,Airbus 380,475,12
+27,VGA661,Cairo,Sydney,Airbus 380,475,9
+0,LH977,Beijing,San Francisco,Airbus 380,475,18
+13,EA611,Bocota,London,Boeing 737,210,17
+20,CA408,Athens,Cape Town,Boeing 747,280,16
+2,AGA965,Minsk,Cape Town,Boeing 747,280,14
+49,AM405,Chicago,Minsk,Boeing 747,280,21
+4,DA763,Manchester,Saint Petersburg,Boeing 747,280,21
+11,AB502,Buenos Aires,Kolkata,Boeing 747,280,8
+27,VGA280,Havana,Rio De Janeiro,Boeing 747,280,7
+43,AUA112,Bocota,Seattle,Boeing 747,280,7
+0,LH727,Vienna,Pretoria,Airbus 380,475,9
+12,OA246,Casablanca,San Francisco,Airbus 380,475,18
+46,SCR645,Lisbon,Frankfurt,Airbus 380,475,19
+1,KLM191,Tokyo,Lisbon,Boeing 737,210,4
+1,KLM904,Casablanca,Phoenix,Boeing 747,280,21
+39,ACR848,Minsk,Lisbon,Boeing 747,280,9
+13,EA713,Alexandria,Denver,Boeing 747,280,3
+0,LH662,London,Minsk,Boeing 747,280,14
+40,AAE832,Madrid,Barcelona,Boeing 747,280,19
+16,BA935,Brussels,Saint Petersburg,Boeing 747,280,18
+17,ATA833,Moscow,Tokyo,Airbus 380,475,18
+16,BA431,Hamburg,Rio De Janeiro,Airbus 380,475,21
+2,AGA224,Buenos Aires,Frankfurt,Airbus 380,475,15
+51,AKA638,London,Mexico City,Boeing 737,210,16
+21,AJ659,Madrid,Casablanca,Airbus A330,230,3
+45,AL676,Milan,Kolkata,Boeing 787,242,9
+48,AB362,Cape Town,Alexandria,Lockheed 1011,400,18
+37,AVA460,Bocota,Madrid,Boeing 747,280,9
+6,AA751,Detroit,Dallas,Airbus 380,475,2
+49,AM546,Chicago,Dallas,Airbus 380,475,7
+11,AB788,Munbai,Manchester,Airbus 380,475,15
+15,SA264,Manchester,Rio De Janeiro,Boeing 737,210,21
+34,ASA941,Saint Petersburg,Seattle,Airbus A330,230,11
+6,AA287,London,Stockholm,Boeing 787,242,3
+36,AAR610,Casablanca,Athens,Lockheed 1011,400,17
+20,CA258,Austin,Kolkata,Boeing 747,280,19
+36,AAR371,Detroit,Detroit,Airbus 380,475,16
+34,ASA118,Madrid,Saint Petersburg,Airbus 380,475,22
+24,AL657,Boston,Chicago,Airbus 380,475,3
+24,AL452,Washington D.C.,Moscow,Boeing 737,210,17
+43,AUA744,Stockholm,Alexandria,Airbus A330,230,2
+39,ACR266,Milan,Saint Petersburg,Boeing 787,242,13
+22,JA907,Los Angeles,Brussels,Lockheed 1011,400,21
+21,AJ921,Rio De Janeiro,Los Angeles,Boeing 787,242,11
+2,AGA454,Stockholm,Seoul,Lockheed 1011,400,5
+16,BA956,Seoul,Saint Petersburg,Boeing 787,242,6
+15,SA750,Beijing,Rome,Lockheed 1011,400,21
+21,AJ154,Seoul,Seattle,Boeing 787,242,4
+42,SAA498,Phoenix,Johannesburg,Lockheed 1011,400,16
+12,OA561,Dallas,Vienna,Lockheed 1011,400,18
+53,CUB680,Los Angeles,Austin,Airbus A330,230,10
+40,AAE897,Moscow,Alexandria,Boeing 787,242,13
+13,EA426,Munbai,Pretoria,Lockheed 1011,400,10
+48,AB674,Casablanca,Manchester,Boeing 747,280,15
+4,DA966,Havana,Austin,Boeing 747,280,6
+21,AJ966,Paris,Minsk,Boeing 747,280,15
+27,VGA113,Washington D.C.,Kolkata,Boeing 747,280,2
+11,AB416,Cairo,Boston,Airbus 380,475,9
+46,SCR139,Madrid,Honolulu,Airbus 380,475,9
+27,VGA919,Rome,Barcelona,Airbus 380,475,8
+25,AT266,Los Angeles,Phoenix,Boeing 737,210,3
+7,HW180,Los Angeles,Los Angeles,Airbus 380,475,2
+8,SA848,Manchester,Brussels,Boeing 737,210,16
+37,AVA383,Dallas,Milan,Airbus A330,230,12
+24,AL394,Kolkata,Montreal,Boeing 787,242,10
+40,AAE204,Johannesburg,Johannesburg,Lockheed 1011,400,17
+49,AM760,Rome,Boston,Boeing 787,242,21
+25,AT880,Cape Town,Phoenix,Lockheed 1011,400,8
+44,AH405,Barcelona,Montreal,Boeing 747,280,13
+45,AL433,Moscow,Manchester,Boeing 747,280,8
+16,BA325,Seattle,Buenos Aires,Boeing 747,280,13
+30,CEA492,Sydney,Milan,Airbus 380,475,18
+30,CEA621,Vienna,Seattle,Airbus 380,475,15
+43,AUA599,Cape Town,Buenos Aires,Airbus 380,475,15
+34,ASA456,Mexico City,Kolkata,Boeing 737,210,10
+39,ACR622,Minsk,Kolkata,Airbus A330,230,9
+4,DA437,Los Angeles,Casablanca,Boeing 787,242,9
+8,SA386,Saint Petersburg,Vancouver,Lockheed 1011,400,22
+22,JA373,Tokyo,Chicago,Airbus 380,475,20
+32,SAR174,Chicago,Saint Petersburg,Boeing 737,210,19
+45,AL678,Montreal,Seattle,Airbus A330,230,18
+47,TRA124,Buenos Aires,Moscow,Boeing 787,242,6
+39,ACR392,Madrid,Buenos Aires,Lockheed 1011,400,18
+50,ARM165,Dallas,Milan,Boeing 787,242,15
+15,SA375,Pretoria,Chicago,Lockheed 1011,400,10
+20,CA306,Cairo,Detroit,Airbus 380,475,8
+9,VA639,Madrid,Hamburg,Boeing 737,210,15
+28,ANZ735,Casablanca,Saint Petersburg,Airbus A330,230,4
+12,OA169,Bocota,Detroit,Boeing 787,242,22
+7,HW158,Buenos Aires,Alexandria,Lockheed 1011,400,5
+23,AAS808,Madrid,Paris,Boeing 787,242,10
+1,KLM711,Sydney,Seattle,Lockheed 1011,400,22
+32,SAR154,Frankfurt,Seattle,Airbus A330,230,22
+35,AAR637,London,Berlin,Boeing 787,242,22
+22,JA369,Detroit,Bocota,Lockheed 1011,400,21
+35,AAR533,Barcelona,Seoul,Airbus A330,230,8
+33,AS886,London,Havana,Boeing 787,242,7
+16,BA933,Mexico City,Minsk,Lockheed 1011,400,7
+33,AS292,Seattle,Pretoria,Boeing 787,242,3
+26,JGA468,Montreal,Barcelona,Lockheed 1011,400,18
+39,ACR389,Beijing,Frankfurt,Airbus A330,230,16
+42,SAA345,Phoenix,Dallas,Boeing 787,242,18
+18,AI524,Vancouver,Dallas,Lockheed 1011,400,13
+53,CUB406,Johannesburg,Berlin,Boeing 787,242,4
+2,AGA870,Buenos Aires,Manchester,Lockheed 1011,400,17
+20,CA902,Athens,Portland,Boeing 787,242,14
+49,AM884,Cape Town,London,Lockheed 1011,400,6
+9,VA820,Johannesburg,Mexico City,Boeing 747,280,11
+39,ACR126,Frankfurt,Berlin,Boeing 747,280,9
+19,ALT734,Munbai,Los Angeles,Boeing 747,280,22
+21,AJ236,Milan,Alexandria,Boeing 787,242,9
+18,AI232,Montreal,Seattle,Lockheed 1011,400,18
+23,AAS881,Chicago,Mexico City,Boeing 787,242,18
+19,ALT950,Vancouver,Phoenix,Lockheed 1011,400,12
+38,AMA482,Washington D.C.,San Francisco,Boeing 747,280,15
+13,EA267,Madrid,Sydney,Boeing 747,280,5
+10,AC231,Athens,Tokyo,Boeing 747,280,9
+33,AS726,Montreal,Moscow,Boeing 737,210,22
+0,LH802,Portland,Paris,Boeing 747,280,6
+32,SAR786,Saint Petersburg,Denver,Airbus 380,475,3
+41,ADA560,Brussels,Stockholm,Boeing 747,280,6
+3,AF315,Moscow,Alexandria,Boeing 747,280,10
+49,AM250,Bocota,Austin,Airbus 380,475,22
+16,BA351,Los Angeles,Seattle,Airbus 380,475,2
+46,SCR609,Manchester,Brussels,Boeing 737,210,2
+10,AC160,Chicago,Montreal,Airbus A320,200,19
+35,AAR189,Manchester,Frankfurt,Airbus A330,230,15
+19,ALT275,Rio De Janeiro,New York,Boeing 737,210,17
+36,AAR118,Paris,Munbai,Boeing 737,210,15
+6,AA458,Washington D.C.,Madrid,Boeing 747,280,22
+39,ACR769,Los Angeles,Paris,Boeing 737,210,13
+20,CA108,Chicago,Beijing,Boeing 747,280,6
+15,SA902,Austin,Moscow,Lockheed 1011,400,14
+41,ADA981,Hamburg,Vienna,Airbus 380,475,9
+0,LH525,Seoul,Seoul,Airbus 380,475,5
+18,AI986,Dallas,Austin,Boeing 737,210,21
+50,ARM847,Pretoria,New York,Boeing 747,280,3
+8,SA806,Saint Petersburg,Cape Town,Airbus A320,200,22
+20,CA703,Portland,Moscow,Boeing 737,210,8
+12,OA803,Detroit,Paris,Boeing 747,280,21
+28,ANZ808,Portland,Saint Petersburg,Boeing 757,300,5
+0,LH222,Austin,Chicago,Boeing 737,210,3
+41,ADA407,Lisbon,Honolulu,Boeing 747,280,12
+19,ALT319,Milan,Barcelona,Lockheed 1011,400,7
+23,AAS393,Tokyo,Cairo,Airbus 380,475,20
+15,SA170,Rome,Rio De Janeiro,Airbus 380,475,7
+25,AT238,New York,Saint Petersburg,Lockheed 1011,400,10
+41,ADA104,Frankfurt,Vienna,Airbus 380,475,3
+26,JGA435,Mexico City,Munbai,Airbus A320,200,11
+50,ARM675,Los Angeles,Austin,Airbus A320,200,5
+22,JA830,Seoul,Mexico City,Boeing 737,210,10
+29,AC431,Minsk,Kolkata,Boeing 747,280,18
+26,JGA249,Los Angeles,Sydney,Boeing 757,300,13
+11,AB217,Cairo,Vancouver,Airbus A320,200,12
+21,AJ318,Lisbon,Athens,Boeing 737,210,4
+6,AA907,Alexandria,Cairo,Boeing 747,280,10
+10,AC614,Washington D.C.,Pretoria,Lockheed 1011,400,12
+5,UA376,Portland,Stockholm,Airbus 380,475,20
+8,SA876,Barcelona,Washington D.C.,Boeing 747,280,16
+16,BA761,Berlin,Alexandria,Lockheed 1011,400,16
+29,AC789,Vancouver,Mexico City,Airbus 380,475,22
+12,OA267,New York,New York,Airbus 380,475,3
+15,SA309,Detroit,San Francisco,Boeing 747,280,18
+24,AL926,Milan,Moscow,Lockheed 1011,400,18
+21,AJ462,Athens,Manchester,Airbus 380,475,17
+30,CEA752,Frankfurt,Athens,Airbus 380,475,11
+48,AB323,Sydney,Minsk,Boeing 747,280,22
+11,AB511,Montreal,Kolkata,Boeing 757,300,9
+3,AF838,Boston,Honolulu,Airbus 380,475,8
+0,LH607,Cape Town,Moscow,Airbus A320,200,13
+2,AGA828,Seoul,Los Angeles,Boeing 737,210,18
+28,ANZ193,Washington D.C.,Dallas,Boeing 747,280,12
+25,AT756,Honolulu,Moscow,Airbus 380,475,3
+39,ACR203,Pretoria,Washington D.C.,Boeing 747,280,3
+4,DA469,Rome,Saint Petersburg,Boeing 747,280,15
+1,KLM145,Phoenix,Frankfurt,Airbus 380,475,16
+48,AB586,Tokyo,Milan,Airbus 380,475,5
+23,AAS356,San Francisco,Mexico City,Boeing 737,210,21
+33,AS476,Seattle,Milan,Airbus A320,200,14
+19,ALT125,Sydney,Athens,Airbus A330,230,6
+11,AB388,Buenos Aires,Rome,Boeing 747,280,11
+47,TRA849,Seattle,Athens,Airbus 380,475,16
+21,AJ697,Detroit,Beijing,Boeing 747,280,16
+28,ANZ139,Portland,Moscow,Boeing 747,280,13
+33,AS576,Barcelona,Havana,Airbus 380,475,11
+7,HW667,Alexandria,Lisbon,Airbus 380,475,17
+53,CUB944,Buenos Aires,Cairo,Boeing 737,210,19
+20,CA589,Brussels,Rome,Airbus A320,200,2
+22,JA915,Washington D.C.,Paris,Airbus A330,230,20
+25,AT241,Minsk,Moscow,Boeing 737,210,8
+38,AMA534,Casablanca,New York,Boeing 737,210,14
+41,ADA351,Beijing,San Francisco,Boeing 747,280,17
+14,IB644,Barcelona,Havana,Boeing 737,210,15
+45,AL517,Hamburg,Kolkata,Boeing 747,280,8
+21,AJ316,Cairo,Detroit,Lockheed 1011,400,15
+52,JB462,New York,Milan,Airbus 380,475,18
+39,ACR907,Frankfurt,London,Airbus 380,475,20
+4,DA865,Madrid,Pretoria,Boeing 737,210,4
+24,AL647,Seoul,Alexandria,Boeing 747,280,4
+12,OA473,Seoul,Buenos Aires,Airbus A320,200,6
+0,LH960,Vancouver,Cape Town,Boeing 737,210,13
+14,IB609,Seoul,Chicago,Boeing 747,280,16
+25,AT451,Brussels,Munbai,Boeing 757,300,2
+24,AL222,Kolkata,Athens,Boeing 737,210,4
+49,AM670,Beijing,Seoul,Boeing 747,280,14
+0,LH469,Stockholm,Paris,Lockheed 1011,400,15
+18,AI760,Moscow,Sydney,Airbus 380,475,9
+47,TRA436,Brussels,Buenos Aires,Airbus 380,475,13
+39,ACR797,Saint Petersburg,Vancouver,Lockheed 1011,400,18
+12,OA338,Dallas,Dallas,Airbus 380,475,11
+30,CEA114,San Francisco,Paris,Airbus A320,200,18
+2,AGA377,Dallas,Mexico City,Airbus A320,200,16
+4,DA298,London,Dallas,Boeing 737,210,13
+9,VA167,Boston,Cape Town,Boeing 747,280,12
+39,ACR948,Pretoria,Seoul,Boeing 757,300,4
+36,AAR227,London,Cairo,Airbus A320,200,22
+17,ATA602,Beijing,San Francisco,Boeing 737,210,2
+41,ADA797,Lisbon,Casablanca,Boeing 747,280,15
+43,AUA646,Athens,Alexandria,Lockheed 1011,400,18
+28,ANZ766,Washington D.C.,Havana,Airbus 380,475,18

@@ -1,0 +1,10 @@
+INSTRUCTIONS
+
+1)compile.sh
+run script to compile your code. All necessary libraries are included. Tested using openjdk 1.8.0_151. 
+Other versions may work but recommended to use the same sdk.
+
+2)run.sh
+Execute your code with inputs dbname, port, user
+
+example: run.sh flightDB 5432 vzois001
