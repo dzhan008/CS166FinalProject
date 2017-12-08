@@ -239,6 +239,8 @@ public class AirBooking extends JFrame{
 		JSpinner passInput = createDigitSpinner(1,1, 9999);
 
 		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
+
 		JLabel originTxt = new JLabel("Origin: ");
 		JLabel destTxt = new JLabel("Destination: ");
 		JTextField originInput = new JTextField("", 15);
@@ -442,7 +444,10 @@ public class AirBooking extends JFrame{
 		JLabel destTxt = new JLabel("Destination: ");
 		JTextField originInput = new JTextField("Madrid", 15);
 		JTextField destInput = new JTextField("Seattle", 15);
+
 		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
+
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
@@ -486,7 +491,6 @@ public class AirBooking extends JFrame{
 					queryDBTable.getViewport().add(createDBTable(flightAvailQuery)); 
 					PanelList.get(panelIndex).add(queryDBTable);
 
-					PanelList.get(panelIndex).add(submitButt);
 
 					//Refresh the frame to show the added table
 					validate(); 
@@ -523,6 +527,7 @@ public class AirBooking extends JFrame{
 		//This is where you add all the components you need for that specific panel
 		JLabel title = new JLabel("Please enter how many top reviews you want to see: ");
 		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
 		JSpinner numRate = createDigitSpinner(1, 1, 9000);
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
@@ -598,6 +603,7 @@ public class AirBooking extends JFrame{
 		JSpinner yearNum = createDigitSpinner(2017, 1900, 9999);
 			
 		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
 
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
