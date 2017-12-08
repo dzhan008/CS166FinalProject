@@ -24,21 +24,20 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.event.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.BorderLayout;
+
 import javax.swing.*;
+import javax.swing.text.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import java.awt.event.*;
-import java.awt.BorderLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Vector;
-import java.util.Calendar;
-import javax.swing.SpinnerDateModel;
 /**
  * This class defines a simple embedded SQL utility class that is designed to
  * work with PostgreSQL JDBC drivers.
@@ -57,8 +56,83 @@ public class AirBooking extends JFrame{
 
 
 	/*---------------Functions---------------*/
-	//Pulls data based on query and returns a scrollpane table
-	public JScrollPane createDBTable(String query) throws SQLException
+	
+	//------Error Handling Functions------//
+	//Use this to show the user that their input was incorrect
+	private static void displayPopUp(String message, String title)
+	{
+		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	private boolean isAlpha(String text)
+	{
+		return text.matches("[a-zA-Z]+");
+	}
+
+	//------Component Making Functions------//
+	//Creates a JSpinner that only allows numeric input. You can set the min and max of the spinner
+	private JSpinner createDigitSpinner(int defaultVal, int min, int max) 
+	{
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(defaultVal,min,max,1));
+		//Dimension d = spinner.getPreferredSize();
+		//d.width = 90;
+		//spinner.setPreferredSize(d);
+		JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor) spinner.getEditor();
+		jsEditor.getFormat().setGroupingUsed(false); //To prevent 2018 becoming 2,018
+		final Document jsDoc = jsEditor.getTextField().getDocument();
+		if (jsDoc instanceof PlainDocument)
+		{
+			AbstractDocument doc = new PlainDocument()
+			{
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void setDocumentFilter(DocumentFilter filter)
+				{
+					if (filter instanceof MyDocumentFilter)
+					{
+						super.setDocumentFilter(filter);
+					}
+				}
+			};
+			doc.setDocumentFilter(new MyDocumentFilter());
+			jsEditor.getTextField().setDocument(doc);
+
+		}
+		return spinner;
+	} 
+	//Creates a filter so that the spinner will only accept numeric input from user. 
+	private static class MyDocumentFilter extends DocumentFilter
+	{
+		@Override
+		public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+		    if (stringContainsOnlyDigits(string)) {
+			super.insertString(fb, offset, string, attr);
+		    }
+		}
+
+		@Override
+		public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+		    super.remove(fb, offset, length);
+		}
+
+		@Override
+		public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+		    if (stringContainsOnlyDigits(text)) {
+			super.replace(fb, offset, length, text, attrs);
+		    }
+		}
+
+		private boolean stringContainsOnlyDigits(String text) {
+		    for (int i = 0; i < text.length(); i++) {
+			if (!Character.isDigit(text.charAt(i))) {
+				displayPopUp("Please only use numeric input", "Invalid Input");
+				return false;
+			}
+		    }
+		    return true;
+		}
+	}
+	//Pulls data based on query and returns a Jtable
+	public JTable createDBTable(String query) throws SQLException 
 	{
 		Statement stmt = this._connection.createStatement ();
 
@@ -72,11 +146,11 @@ public class AirBooking extends JFrame{
 		ResultSetMetaData rsmd = rs.getMetaData ();
 		int numCol = rsmd.getColumnCount ();
 		int rowCount = 0;
-
+		
 		//Have to use Vector because JTable don't allow List
-		Vector<Vector<String>> result  = new Vector<Vector<String>>();
+		Vector<Vector<String>> result  = new Vector<Vector<String>>(); 
 		Vector<String> columnHeader = new Vector<String>();
-
+		
 		//iterates through the result set and output them to standard out.
 		boolean outputHeader = true;
 		while (rs.next()){
@@ -85,14 +159,14 @@ public class AirBooking extends JFrame{
 					columnHeader.add(rsmd.getColumnName(i));
 			    outputHeader = false;
 			}
-			Vector<String> record = new Vector<String>();
-			for (int i=1; i<=numCol; ++i)
-				record.add(rs.getString (i));
-			result.add(record);
+			Vector<String> record = new Vector<String>(); 
+			for (int i=1; i<=numCol; ++i) 
+				record.add(rs.getString (i)); 
+			result.add(record); 
 			++rowCount;
 		}//end while
 		stmt.close ();
-
+		
 		//Create the Table
 		DefaultTableModel dTableModel = new DefaultTableModel(result, columnHeader){
 			@Override
@@ -104,11 +178,10 @@ public class AirBooking extends JFrame{
 
 		JTable table = new JTable(dTableModel);
 		table.setAutoCreateRowSorter(true);
-		JScrollPane scrollDBTable = new JScrollPane(table);
-		//JScrollPane scrollDBTable = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-		return scrollDBTable;
+		return table;
 	}
+	
+	//------Create Panel Functions------//
 	/* 1) Add Passenger */
 	private void createPanel1()
 	{
@@ -120,26 +193,26 @@ public class AirBooking extends JFrame{
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				try
 				{
 					//Validate Required Fields
-
-
+					
+						
 					//Execute the Query and Make Table
 					//Replace the string with your SQL Query
-					String query = "SELECT * FROM flight ORDER BY airId ASC LIMIT 100";
+					String query = "SELECT * FROM flight ORDER BY airId ASC LIMIT 100"; 
 
 					//Create the Table
 					if (queryDBTable != null)
 						PanelList.get(panelIndex).remove(queryDBTable);
-					queryDBTable.getViewport().add(createDBTable(query));
+					queryDBTable.getViewport().add(createDBTable(query)); 
 					PanelList.get(panelIndex).add(queryDBTable, BorderLayout.CENTER);
 
 					//Refresh the frame to show the added table
-					validate();
-					repaint();
+					validate(); 
+					repaint(); 
 
 				}
 				catch(SQLException ex)
@@ -152,7 +225,7 @@ public class AirBooking extends JFrame{
 		//Add components
 		PanelList.get(panelIndex).add(title);
 		PanelList.get(panelIndex).add(submitButt);
-
+	
 	}
 
 	/* 2) Book Flight */
@@ -160,17 +233,185 @@ public class AirBooking extends JFrame{
 	{
 		int panelIndex = 1;
 		//Create components
-		JLabel title = new JLabel("Second");
-		JButton submitButt = new JButton("Submit");
-		submitButt.addActionListener(new ActionListener()
+
+
+		JLabel passTxt = new JLabel("Passenger ID: ");
+		JSpinner passInput = createDigitSpinner(1,1, 9999);
+
+		JScrollPane queryDBTable = new JScrollPane();
+		JLabel originTxt = new JLabel("Origin: ");
+		JLabel destTxt = new JLabel("Destination: ");
+		JTextField originInput = new JTextField("", 15);
+		JTextField destInput = new JTextField("", 15);
+
+		JLabel monthTxt = new JLabel("Month: ");
+		JLabel dateTxt = new JLabel("Date: ");
+		JLabel yearTxt = new JLabel("Year: ");
+
+
+		JSpinner monthNum = createDigitSpinner(1, 1, 12);
+		JSpinner dateNum = createDigitSpinner(1, 1, 31);
+		JSpinner yearNum = createDigitSpinner(2017, 1900, 9999);
+
+
+
+		JButton submitButt = new JButton("Book Flight");
+		JButton searchButt = new JButton("Search for Available Flights");
+		searchButt.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
+				try
+				{
+					//Validate Required Fields
+					
+					String originIn = originInput.getText();
+					String destIn = destInput.getText();
+					if (originIn.length() == 0)
+					{
+						displayPopUp("Please enter an origin.", "Invalid Input");
+						return;
+					}
+					if (destIn.length() == 0)
+					{
+						displayPopUp("Please enter a destination.", "Invalid Input");
+						return;
+					}
+					if (!isAlpha(originIn) || !isAlpha(destIn))
+					{
+						displayPopUp("Location can only use letters.", "Invalid Input");
+						return;
+					}
+
+					String departIn = monthNum.getValue() + "/" + dateNum.getValue() + "/" + yearNum.getValue();
+					//Find if that number is less than the flight seat's, its available
+					String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination,";
+					flightAvailQuery += " COALESCE(a.departure, date\'" + departIn +  "\') AS departure, ";
+					flightAvailQuery += "COALESCE(a.booked, 0) AS booked, Flight.seats, ";
+					flightAvailQuery += "COALESCE(Flight.seats - a.booked, Flight.seats) AS available ";
+					flightAvailQuery += "FROM Flight ";
+					flightAvailQuery += "LEFT JOIN (SELECT Booking.flightNum, Booking.departure, COUNT(Booking.flightNum) as booked ";
+					flightAvailQuery += "FROM Booking WHERE Booking.departure = \'" + departIn + "\' ";
+					flightAvailQuery += "GROUP BY Booking.flightNum, Booking.departure) AS a ";
+					flightAvailQuery += "ON a.flightNum = Flight.flightNum ";
+					flightAvailQuery += "WHERE Flight.origin = \'" + originIn;
+					flightAvailQuery += "\' AND Flight.destination = \'" + destIn + "\'";
+
+					//Create the Table
+					if (queryDBTable != null)
+						PanelList.get(panelIndex).remove(queryDBTable);
+					queryDBTable.getViewport().add(createDBTable(flightAvailQuery)); 
+					PanelList.get(panelIndex).add(queryDBTable);
+					PanelList.get(panelIndex).add(submitButt);
+					//Refresh the frame to show the added table
+					validate(); 
+					repaint(); 
+
+				}
+				catch(SQLException ex)
+				{
+					System.out.println(ex.getMessage());
+				}
+
 			}
 		});
+		submitButt.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					
+					String passQuery = "SELECT pID, fullName FROM Passenger WHERE pID =" + passInput.getValue();
+					List<List<String>> passInfo = executeQueryAndReturnResult(passQuery);
+					if (passInfo.size() == 0)
+					{
+						displayPopUp("That id isn't in our system.", "Error");
+						return;
+					}
+
+					//Input into the Booking database
+					//Booking number is 5 chars, 4 nums, 1 char
+					//Create random booking number:
+					Random r = new Random();
+					String bookingString = "";
+					int count = 0;
+					while (count < 5)
+					{
+						bookingString += (char) (r.nextInt(26) + 'A');
+						count++;
+					}
+					count = 0;
+					while (count < 4)
+					{
+						bookingString += r.nextInt(9);
+						count++;
+					}
+					bookingString += (char) (r.nextInt(26) + 'A');
+
+					JViewport viewport = queryDBTable.getViewport();
+					JTable flightTable = (JTable)viewport.getView();
+					int row = flightTable.getSelectedRow();
+					if (row == -1)
+					{
+						displayPopUp("Please select a flight to book", "Error");
+						return;
+					}
+					String flightNum = flightTable.getModel().getValueAt(row, 0).toString();
+					String departDate = flightTable.getModel().getValueAt(row, 3).toString();
+					//Insert into Booking table
+					//bookRef, depart, flightNum, pid
+					//allAvailFlights indexes are:
+					//0-flightNum, 1-origin, 2-dest, 3-depart, 4-booked, 5-total, 6-free 
+					String insertQuery = "INSERT into Booking VALUES (\'";
+					insertQuery += bookingString + "\', date \'";
+					insertQuery += departDate + "\', \'";
+					insertQuery += flightNum + "\', ";
+					insertQuery += passInfo.get(0).get(0) + ")";
+					
+					executeUpdate(insertQuery);
+					
+					String checkInsert = "SELECT bookRef FROM Booking WHERE bookRef = ";
+					checkInsert += "\'" + bookingString + "\'";
+
+					int rows = executeQuery(checkInsert);
+					refreshPanel(panelIndex);
+					if (rows > 0)
+						displayPopUp("Successfully booked flight. Thank you!", "Booked Flight");
+					else 
+						displayPopUp("There was an error in the system. Please try again.", "Error");
+
+				}
+				catch(SQLException ex)
+				{
+					System.out.println(ex.getErrorCode());
+					if (ex.getErrorCode() == 0)
+					{
+						displayPopUp("You already booked that flight!", "Error");
+					}
+					System.out.println(ex.getMessage());
+				}
+
+			}
+		});
+		
 		//Add components
-		PanelList.get(1).add(title);
-		PanelList.get(1).add(submitButt);
+		PanelList.get(panelIndex).add(passTxt);
+		PanelList.get(panelIndex).add(passInput);
+
+		PanelList.get(panelIndex).add(originTxt);
+		PanelList.get(panelIndex).add(originInput);
+		PanelList.get(panelIndex).add(destTxt);
+		PanelList.get(panelIndex).add(destInput);
+
+		PanelList.get(panelIndex).add(monthTxt);
+		PanelList.get(panelIndex).add(monthNum);
+		PanelList.get(panelIndex).add(dateTxt);
+		PanelList.get(panelIndex).add(dateNum);
+		PanelList.get(panelIndex).add(yearTxt);
+		PanelList.get(panelIndex).add(yearNum);
+
+		PanelList.get(panelIndex).add(searchButt);
 	}
 
 	/* 3) Review Flight */
@@ -178,27 +419,25 @@ public class AirBooking extends JFrame{
 	{
 		int panelIndex = 2;
 		JPanel Panel = new JPanel();
+		
 		//This is where you add all the components you need for that specific panel
 		//Crate comment text area
-		JTextArea comment = new JTextArea(10,50); //(height, width)
+		JTextArea comment = new JTextArea(10,50); //(height, width) 
 		comment.setText("This is for the comments section");
 		comment.setLineWrap(true); //Wrap the text inside the text area
 		comment.setWrapStyleWord(true); //So the words dont get broken up when it doesn't fit in the line
-
+		
 		//this scroll panel allows the text area to scroll on overflow as needed
 		JScrollPane commentScroll = new JScrollPane(comment, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		PanelList.get(panelIndex).add(commentScroll);
 	}
-
+	
 
 	/* 4) List Flights from Origin to Destination */
 	private void createPanel4()
 	{
 		int panelIndex = 3;
-		//PanelList.get(panelIndex)
-		//This is where you add all the components you need for that specific panel
-
 		JLabel originTxt = new JLabel("Origin: ");
 		JLabel destTxt = new JLabel("Destination: ");
 		JTextField originInput = new JTextField("Madrid", 15);
@@ -207,14 +446,30 @@ public class AirBooking extends JFrame{
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				try
 				{
 					//Validate Required Fields
-
+					
 					String originIn = originInput.getText();
 					String destIn = destInput.getText();
+					if (originIn.length() == 0)
+					{
+						displayPopUp("Please enter an origin", "Invalid Input");
+						return;
+					}
+					if (destIn.length() == 0)
+					{
+						displayPopUp("Please enter a destination", "Invalid Input");
+						return;
+					}
+					if (!isAlpha(originIn) || !isAlpha(destIn))
+					{
+						displayPopUp("Location can only use letters.", "Invalid Input");
+						return;
+					}
+
 					//Execute the Query and Make Table
 					String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination, Flight.plane, Flight.duration ";
 					flightAvailQuery += "FROM Flight ";
@@ -228,12 +483,14 @@ public class AirBooking extends JFrame{
 					//Create the Table
 					if (queryDBTable != null)
 						PanelList.get(panelIndex).remove(queryDBTable);
-					queryDBTable.getViewport().add(createDBTable(flightAvailQuery));
+					queryDBTable.getViewport().add(createDBTable(flightAvailQuery)); 
 					PanelList.get(panelIndex).add(queryDBTable);
 
+					PanelList.get(panelIndex).add(submitButt);
+
 					//Refresh the frame to show the added table
-					validate();
-					repaint();
+					validate(); 
+					repaint(); 
 
 				}
 				catch(SQLException ex)
@@ -265,22 +522,18 @@ public class AirBooking extends JFrame{
 		int panelIndex = 5;
 		//This is where you add all the components you need for that specific panel
 		JLabel title = new JLabel("Please enter how many top reviews you want to see: ");
-		JTextField numRate = new JTextField("100");
 		JScrollPane queryDBTable = new JScrollPane();
+		JSpinner numRate = createDigitSpinner(1, 1, 9000);
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				try
 				{
-					//Validate Required Fields
-
-					String numIn = numRate.getText();
+					//Get required fields
+					Object numIn = numRate.getValue(); 
 					//Execute the Query and Make Table
-					//Replace the string with your SQL Query
-					//
-
 					//Groups flight numbers and shows the average score of each.
 					String grabNReview = "SELECT Ratings.flightNum, ";
 					grabNReview += "AVG(Ratings.score) as avg, ";
@@ -301,12 +554,12 @@ public class AirBooking extends JFrame{
 					//Create the Table
 					if (queryDBTable != null)
 						PanelList.get(panelIndex).remove(queryDBTable);
-					queryDBTable.getViewport().add(createDBTable(displayInfo));
+					queryDBTable.getViewport().add(createDBTable(displayInfo)); 
 					PanelList.get(panelIndex).add(queryDBTable);
 
 					//Refresh the frame to show the added table
-					validate();
-					repaint();
+					validate(); 
+					repaint(); 
 
 				}
 				catch(SQLException ex)
@@ -334,19 +587,27 @@ public class AirBooking extends JFrame{
 	{
 		int panelIndex = 7;
 		//This is where you add all the components you need for that specific panel
-		JLabel title = new JLabel("Please enter in a date: ");
-		JTextField date = new JTextField("05/04/2017");
+		JLabel title = new JLabel("Please enter in a date.");
+		JLabel monthTxt = new JLabel("Month: ");
+		JLabel dateTxt = new JLabel("Date: ");
+		JLabel yearTxt = new JLabel("Year: ");
+
+
+		JSpinner monthNum = createDigitSpinner(1, 1, 12);
+		JSpinner dateNum = createDigitSpinner(1, 1, 31);
+		JSpinner yearNum = createDigitSpinner(2017, 1900, 9999);
+			
 		JScrollPane queryDBTable = new JScrollPane();
+
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				try
 				{
 					//Validate Required Fields
-
-					String departIn = date.getText();
+					String departIn = monthNum.getValue() + "/" + dateNum.getValue() + "/" + yearNum.getValue();
 					//Execute the Query and Make Table
 					//Replace the string with your SQL Query
 					String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination,";
@@ -362,12 +623,12 @@ public class AirBooking extends JFrame{
 					//Create the Table
 					if (queryDBTable != null)
 						PanelList.get(panelIndex).remove(queryDBTable);
-					queryDBTable.getViewport().add(createDBTable(flightAvailQuery));
+					queryDBTable.getViewport().add(createDBTable(flightAvailQuery)); 
 					PanelList.get(panelIndex).add(queryDBTable);
 
 					//Refresh the frame to show the added table
-					validate();
-					repaint();
+					validate(); 
+					repaint(); 
 
 				}
 				catch(SQLException ex)
@@ -379,10 +640,16 @@ public class AirBooking extends JFrame{
 
 		//Add components
 		PanelList.get(panelIndex).add(title);
-		PanelList.get(panelIndex).add(date);
+		PanelList.get(panelIndex).add(monthTxt);
+		PanelList.get(panelIndex).add(monthNum);
+		PanelList.get(panelIndex).add(dateTxt);
+		PanelList.get(panelIndex).add(dateNum);
+		PanelList.get(panelIndex).add(yearTxt);
+		PanelList.get(panelIndex).add(yearNum);
 		PanelList.get(panelIndex).add(submitButt);
 	}
-
+	
+	//------Constructor------//
 	public AirBooking(String dbname, String dbport, String user, String passwd) throws SQLException {
 		System.out.print("Connecting to database...");
 		try
@@ -390,17 +657,17 @@ public class AirBooking extends JFrame{
 			// constructs the connection URL
 			String url = "jdbc:postgresql://localhost:" + dbport + "/" + dbname;
 			System.out.println ("Connection URL: " + url + "\n");
-
+			
 			// obtain a physical connection
 		        this._connection = DriverManager.getConnection(url, user, passwd);
 	        	System.out.println("Done");
-
+		
 
 			/*-----------Start of creating the application-----------*/
 			this.setSize(1320,820); //Frame size (Frame aka Window)
 
 			Toolkit tk = Toolkit.getDefaultToolkit(); //Allows us to get the size of the montior screen
-			Dimension dim = tk.getScreenSize();
+			Dimension dim = tk.getScreenSize(); 
 
 			//Centers the frame in the middle of the screen
 			int xPos = (dim.width / 2) - (this.getWidth() / 2);
@@ -418,12 +685,12 @@ public class AirBooking extends JFrame{
 				PanelList.add(new JPanel());
 				i += 1;
 			}
-
+			
 			/*Add the components to the first tab
 			 *Only need to do this one because the tabbedPanel onchange listener
 			 * will handle adding the components to the other panels
 			 */
-			createPanel1();
+			createPanel1(); 
 
 			//Create a tab for each panel
 			tabbedPanel.add("Add Passenger", PanelList.get(0));
@@ -434,7 +701,7 @@ public class AirBooking extends JFrame{
 			tabbedPanel.add("Highest Rated Destinations", PanelList.get(5));
 			tabbedPanel.add("Flights to Destinations in order of Duration", PanelList.get(6));
 			tabbedPanel.add("Number of Available Seats on a Flight", PanelList.get(7));
-
+			
 			//Will reset the panel to default of the selected tab onchange
 			tabbedPanel.addChangeListener(new ChangeListener()
 			{
@@ -446,9 +713,9 @@ public class AirBooking extends JFrame{
 			});
 
 			this.add(tabbedPanel); //Add tabs to the frame
-
+		
 			this.setVisible(true); //Set the frame to visible
-
+			
 		}catch(Exception e){
 			System.err.println("Error - Unable to Connect to Database: " + e.getMessage());
 			System.out.println("Make sure you started postgres on this machine");
@@ -504,11 +771,11 @@ public class AirBooking extends JFrame{
 	/**
 	 * Method to execute an update SQL statement.  Update SQL instructions
 	 * includes CREATE, INSERT, UPDATE, DELETE, and DROP.
-	 *
+	 * 
 	 * @param sql the input SQL string
 	 * @throws java.sql.SQLException when update failed
 	 * */
-	public void executeUpdate (String sql) throws SQLException {
+	public void executeUpdate (String sql) throws SQLException { 
 		// creates a statement object
 		Statement stmt = this._connection.createStatement ();
 
@@ -523,7 +790,7 @@ public class AirBooking extends JFrame{
 	 * Method to execute an input query SQL instruction (i.e. SELECT).  This
 	 * method issues the query to the DBMS and outputs the results to
 	 * standard out.
-	 *
+	 * 
 	 * @param query the input query string
 	 * @return the number of rows returned
 	 * @throws java.sql.SQLException when failed to execute the query
@@ -542,7 +809,7 @@ public class AirBooking extends JFrame{
 		ResultSetMetaData rsmd = rs.getMetaData ();
 		int numCol = rsmd.getColumnCount ();
 		int rowCount = 0;
-
+		
 		//iterates through the result set and output them to standard out.
 		boolean outputHeader = true;
 		while (rs.next()){
@@ -561,48 +828,48 @@ public class AirBooking extends JFrame{
 		stmt.close ();
 		return rowCount;
 	}
-
+	
 	/**
 	 * Method to execute an input query SQL instruction (i.e. SELECT).  This
 	 * method issues the query to the DBMS and returns the results as
 	 * a list of records. Each record in turn is a list of attribute values
-	 *
+	 * 
 	 * @param query the input query string
 	 * @return the query result as a list of records
 	 * @throws java.sql.SQLException when failed to execute the query
 	 */
-	public List<List<String>> executeQueryAndReturnResult (String query) throws SQLException {
-		//creates a statement object
-		Statement stmt = this._connection.createStatement ();
-
-		//issues the query instruction
-		ResultSet rs = stmt.executeQuery (query);
-
+	public List<List<String>> executeQueryAndReturnResult (String query) throws SQLException { 
+		//creates a statement object 
+		Statement stmt = this._connection.createStatement (); 
+		
+		//issues the query instruction 
+		ResultSet rs = stmt.executeQuery (query); 
+	 
 		/*
-		 * obtains the metadata object for the returned result set.  The metadata
-		 * contains row and column info.
-		*/
-		ResultSetMetaData rsmd = rs.getMetaData ();
-		int numCol = rsmd.getColumnCount ();
-		int rowCount = 0;
-
-		//iterates through the result set and saves the data returned by the query.
+		 * obtains the metadata object for the returned result set.  The metadata 
+		 * contains row and column info. 
+		*/ 
+		ResultSetMetaData rsmd = rs.getMetaData (); 
+		int numCol = rsmd.getColumnCount (); 
+		int rowCount = 0; 
+	 
+		//iterates through the result set and saves the data returned by the query. 
 		boolean outputHeader = false;
-		List<List<String>> result  = new ArrayList<List<String>>();
+		List<List<String>> result  = new ArrayList<List<String>>(); 
 		while (rs.next()){
-			List<String> record = new ArrayList<String>();
-			for (int i=1; i<=numCol; ++i)
-				record.add(rs.getString (i));
-			result.add(record);
-		}//end while
-		stmt.close ();
-		return result;
+			List<String> record = new ArrayList<String>(); 
+			for (int i=1; i<=numCol; ++i) 
+				record.add(rs.getString (i)); 
+			result.add(record); 
+		}//end while 
+		stmt.close (); 
+		return result; 
 	}//end executeQueryAndReturnResult
-
+	
 	/**
 	 * Method to execute an input query SQL instruction (i.e. SELECT).  This
 	 * method issues the query to the DBMS and returns the number of results
-	 *
+	 * 
 	 * @param query the input query string
 	 * @return the number of rows returned
 	 * @throws java.sql.SQLException when failed to execute the query
@@ -623,20 +890,20 @@ public class AirBooking extends JFrame{
 		stmt.close ();
 		return rowCount;
 	}
-
+	
 	/**
 	 * Method to fetch the last value from sequence. This
-	 * method issues the query to the DBMS and returns the current
+	 * method issues the query to the DBMS and returns the current 
 	 * value of sequence used for autogenerated keys
-	 *
+	 * 
 	 * @param sequence name of the DB sequence
 	 * @return current value of a sequence
 	 * @throws java.sql.SQLException when failed to execute the query
 	 */
-
+	
 	public int getCurrSeqVal(String sequence) throws SQLException {
 		Statement stmt = this._connection.createStatement ();
-
+		
 		ResultSet rs = stmt.executeQuery (String.format("Select currval('%s')", sequence));
 		if (rs.next()) return rs.getInt(1);
 		return -1;
@@ -658,7 +925,7 @@ public class AirBooking extends JFrame{
 
 	/**
 	 * The main execution method
-	 *
+	 * 
 	 * @param args the command line arguments this inclues the <mysql|pgsql> <login file>
 	 */
 	public static void main (String[] args) {
@@ -668,11 +935,11 @@ public class AirBooking extends JFrame{
 		            " <dbname> <port> <user>");
 			return;
 		}//end if
-
+		
 		AirBooking esql = null;
-
+		
 		try{
-
+			
 			try {
 				Class.forName("org.postgresql.Driver");
 			}catch(Exception e){
@@ -681,15 +948,14 @@ public class AirBooking extends JFrame{
 				e.printStackTrace();
 				return;
 			}
-
+			
 			String dbname = args[0];
 			String dbport = args[1];
 			String user = args[2];
+			
 
-
-		//new AirBooking(); //created the application
 			esql = new AirBooking (dbname, dbport, user, "");
-
+			
 			boolean keepon = true;
 			while(keepon){
 				System.out.println("MAIN MENU");
@@ -704,7 +970,7 @@ public class AirBooking extends JFrame{
 				System.out.println("8. List Flights to Destination in order of Duration");
 				System.out.println("9. Find Number of Available Seats on a given Flight");
 				System.out.println("10. < EXIT");
-
+				
 				switch (readChoice()){
 					case 1: AddPassenger(esql); break;
 					case 2: BookFlight(esql); break;
@@ -726,7 +992,7 @@ public class AirBooking extends JFrame{
 					System.out.print("Disconnecting from database...");
 					esql.cleanup ();
 					System.out.println("Done\n\nBye !");
-				}//end if
+				}//end if				
 			}catch(Exception e){
 				// ignored.
 			}
@@ -748,7 +1014,7 @@ public class AirBooking extends JFrame{
 		}while (true);
 		return input;
 	}//end readChoice
-
+	
 	public static void AddPassenger(AirBooking esql){//1
 		//Add a new passenger to the database
 		try{
@@ -762,7 +1028,7 @@ public class AirBooking extends JFrame{
 			System.out.print("Country: ");
 			String country = in.readLine();
 			query += "VALUES ( " + "\'" + passportno + "\'" + ", " + "\'" + name + "\'" + ", " + "\'" + birthdate + "\'" + ", " + "\'" + country + "\'" + ")";
-
+			
 			esql.executeQuery(query);
 			System.out.print("Passenger added!");
 		}catch(Exception e)
@@ -770,7 +1036,7 @@ public class AirBooking extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
 
 	public static void BookFlight(AirBooking esql){//2
 		//Book Flight for an existing customer
@@ -796,17 +1062,17 @@ public class AirBooking extends JFrame{
 					System.out.print("Are you " + passInfo.get(0).get(1) + "? (y/n): ");
 					String answer = in.readLine();
 					if ("y".equals(answer)) break;
-
+					
 				}
 			}while(true);
 			System.out.print("__________________________________________\n");
 			System.out.print("Welcome " + passInfo.get(0).get(1) + "\n");
 			System.out.print("Please select your origin: ");
-			String originIn = in.readLine();
+			String originIn = in.readLine(); 
 			System.out.print("Please select your destination: ");
 			String destIn = in.readLine();
  			System.out.print("Please enter a departure date (MM/DD/YYYY): ");
-			String departIn = in.readLine();
+			String departIn = in.readLine(); 
 
 			//Find if that number is less than the flight seat's, its available
 			String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination,";
@@ -822,7 +1088,7 @@ public class AirBooking extends JFrame{
 			flightAvailQuery += "\' AND Flight.destination = \'" + destIn + "\'";
 
 			//esql.executeQueryAndPrintResult(flightAvailQuery);
-
+			
 			List<List<String>> allAvailFlights = esql.executeQueryAndReturnResult(flightAvailQuery);
 
 			int flightIndex = -2;
@@ -856,7 +1122,7 @@ public class AirBooking extends JFrame{
 				{
 					System.out.print("\n That is an invalid number.");
 					continue;
-				}
+				} 
 				System.out.print("\nAre you sure you want to book this flight?(y/n)\n");
 				for(String temp: allAvailFlights.get(flightIndex)) System.out.print(temp.replaceAll("\\s+","") + "\t");
 				System.out.print('\n');
@@ -887,27 +1153,27 @@ public class AirBooking extends JFrame{
 			//Insert into Booking table
 			//bookRef, depart, flightNum, pid
 			//allAvailFlights indexes are:
-			//0-flightNum, 1-origin, 2-dest, 3-depart, 4-booked, 5-total, 6-free
+			//0-flightNum, 1-origin, 2-dest, 3-depart, 4-booked, 5-total, 6-free 
 			String insertQuery = "INSERT into Booking VALUES (\'";
 			insertQuery += bookingString + "\', date \'";
 			insertQuery += allAvailFlights.get(flightIndex).get(3) + "\', \'";
 			insertQuery += allAvailFlights.get(flightIndex).get(0) + "\', ";
 			insertQuery += passInfo.get(0).get(0) + ")";
-
+			
 			esql.executeUpdate(insertQuery);
-
+			
 			String checkInsert = "SELECT bookRef FROM Booking WHERE bookRef = ";
 			checkInsert += "\'" + bookingString + "\'";
 
 			int rows = esql.executeQuery(checkInsert);
 			if (rows > 0) System.out.print("Successfully booked! Thank you.\n");
 			else System.out.print("There seems to be an error. Please try again.\n");
-
+			
 		}catch(Exception e){
-			System.err.println(e.getMessage());
-		}
+			System.err.println(e.getMessage());	
+		}	
 	}
-
+	
 	public static void TakeCustomerReview(AirBooking esql){//3
 		//Insert customer review into the ratings table
 		try {
@@ -941,7 +1207,7 @@ public class AirBooking extends JFrame{
 			{
 				System.out.print("ERROR: Passenger did not attend this flight!\n");
 				return;
-			}
+			} 
 			System.out.print("Score: ");
 			int score = Integer.parseInt(in.readLine());
 			//Check if score is valid (0-5)
@@ -962,18 +1228,18 @@ public class AirBooking extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
 	public static void InsertOrUpdateRouteForAirline(AirBooking esql){//4
 		//Insert a new route for the airline
 	}
-
+	
 	public static void ListAvailableFlightsBetweenOriginAndDestination(AirBooking esql) throws Exception{//5
-		//List all flights between origin and distination (i.e. flightNum,origin,destination,plane,duration)
+		//List all flights between origin and distination (i.e. flightNum,origin,destination,plane,duration) 
 		System.out.print("Please select your origin: ");
-		String originIn = in.readLine();
+		String originIn = in.readLine(); 
 		System.out.print("Please select your destination: ");
-		String destIn = in.readLine();
-
+		String destIn = in.readLine(); 
+		
 		String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination, Flight.plane, Flight.duration ";
 		flightAvailQuery += "FROM Flight ";
 		flightAvailQuery += "LEFT JOIN (SELECT Booking.flightNum, COUNT(Booking.flightNum) as Total ";
@@ -992,7 +1258,7 @@ public class AirBooking extends JFrame{
 		}
 
 	}
-
+	
 	public static void ListMostPopularDestinations(AirBooking esql){//6
 		//Print the k most popular destinations based on the number of flights offered to them (i.e. destination, choices)
 		try {
@@ -1025,17 +1291,17 @@ public class AirBooking extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
 	public static void ListHighestRatedRoutes(AirBooking esql){//7
 		try{
 			System.out.print("Please enter number of highest rated routes you want: ");
-
+			
 			int numIn = Integer.parseInt(in.readLine());
 			if (numIn < 0)
 			{
 				System.out.print("Error: Please enter a number higher than 0.");
 				return;
-			}
+			}	
 			//Groups flight numbers and shows the average score of each.
 			String grabNReview = "SELECT Ratings.flightNum, ";
 			grabNReview += "AVG(Ratings.score) as avg, ";
@@ -1088,7 +1354,7 @@ public class AirBooking extends JFrame{
 				System.out.print("There are no flights with the destination provided.");
 				return;
 			}
-
+            
 			System.out.print("Provide the number of flights you would like to see: ");
 			int flights = Integer.parseInt(in.readLine());
 			if (flights < 1)
@@ -1125,13 +1391,13 @@ public class AirBooking extends JFrame{
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
 	public static void FindNumberOfAvailableSeatsForFlight(AirBooking esql){//9
 		try
 		{
 			System.out.print("Please enter a date: ");
-			String departIn = in.readLine();
-
+			String departIn = in.readLine(); 
+			
 			//Find if that number is less than the flight seat's, its available
 			String flightAvailQuery = "SELECT Flight.flightNum, Flight.origin, Flight.destination,";
 			flightAvailQuery += " COALESCE(a.departure, date\'" + departIn +  "\') AS departure, ";
@@ -1148,9 +1414,11 @@ public class AirBooking extends JFrame{
 		{
 			System.err.println(e.getMessage());
 		}
+		
 
-
-
+		
 	}
 
 }
+
+
