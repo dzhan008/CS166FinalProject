@@ -63,9 +63,46 @@ public class AirBooking extends JFrame{
 	{
 		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
+	//Checks if a given string has all letters inside. Works for multiple words)
 	private boolean isAlpha(String text)
 	{
-		return text.matches("[a-zA-Z]+");
+		return text.matches("[a-zA-Z\\s\\.]+");
+	}
+
+	//Returns the number of passengers that exist in the passenger database.	
+	private int getNumberOfPassengers() 
+	{
+		try
+		{
+			String seqQuery = "SELECT Count(fullName) FROM Passenger";
+			List<List<String>> countResult = executeQueryAndReturnResult(seqQuery);			
+			return Integer.valueOf(countResult.get(0).get(0));
+		}
+		catch(SQLException ex)
+		{	
+			
+			System.out.println(ex.getMessage());
+			System.out.println(ex.getErrorCode());
+			return -1;
+		}
+	}
+
+	//Returns the number of ratings that exist in the rating database.	
+	private int getNumberOfRatings() 
+	{
+		try
+		{
+			String seqQuery = "SELECT Count(rID) FROM Ratings";
+			List<List<String>> countResult = executeQueryAndReturnResult(seqQuery);			
+			return Integer.valueOf(countResult.get(0).get(0));
+		}
+		catch(SQLException ex)
+		{	
+			
+			System.out.println(ex.getMessage());
+			System.out.println(ex.getErrorCode());
+			return -1;
+		}
 	}
 
 	//------Component Making Functions------//
@@ -186,10 +223,49 @@ public class AirBooking extends JFrame{
 	private void createPanel1()
 	{
 		int panelIndex = 0;
+		//Constant to define the exact length a passport ID needs to be.	
+		final int PASSPORT_ID_LENGTH = 10;
 		//This is where you add all the components you need for that specific panel
 		//Create components
-		JLabel title = new JLabel("First");
+		
 		JScrollPane queryDBTable = new JScrollPane();
+		
+		//General information components
+		JLabel firstNameTxt = new JLabel("First Name");
+		JLabel lastNameTxt = new JLabel("Last Name");
+		JLabel passportTxt = new JLabel("Passport ID");
+		JLabel countryTxt = new JLabel("Country");
+
+		JTextField firstNameField = new JTextField(20);
+		JTextField lastNameField = new JTextField(20);
+		JTextField countryField = new JTextField(20);
+
+		JTextField passportField = new JTextField(20);
+		//Limit number of characters of passport field to 1	
+		passportField.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if(passportField.getText().length() >= PASSPORT_ID_LENGTH)
+					e.consume();
+			}
+		});
+	
+		//Date of birth components
+		JLabel monthTxt = new JLabel("Month: ");
+		JLabel dateTxt = new JLabel("Date: ");
+		JLabel yearTxt = new JLabel("Year: ");
+
+		JSpinner monthNum = createDigitSpinner(2, 1, 12);
+		JSpinner dateNum = createDigitSpinner(2, 1, 31);
+		JSpinner yearNum = createDigitSpinner(1900, 1900, 9999);
+		monthNum.setValue(1);	
+		dateNum.setValue(1);
+		yearNum.setValue(2017);
+
+
+
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
@@ -198,13 +274,84 @@ public class AirBooking extends JFrame{
 				try
 				{
 					//Validate Required Fields
+					String name = firstNameField.getText() + " " + lastNameField.getText();
+					String passportId = passportField.getText();
+					String country = countryField.getText();	
+				        String birthdate = String.valueOf(monthNum.getValue()) + '/';
+					birthdate +=  String.valueOf(dateNum.getValue()) + '/';
+					birthdate += String.valueOf(yearNum.getValue());
 					
-						
+					if(firstNameField.getText().isEmpty())
+					{
+						displayPopUp("Please enter a first name.", "Input Error");
+						return;
+					}
+					else if(lastNameField.getText().isEmpty())
+					{
+						displayPopUp("Please enter a last name.", "Input Error");
+						return;
+					}
+					else if(country.isEmpty())
+					{
+						displayPopUp("Please enter a country.", "Input Error");
+						return;
+					}
+					else if(passportId.isEmpty())
+					{
+						displayPopUp("Please enter a passport ID.", "Input Error");
+						return;
+					}		
+					else if(!isAlpha(name))
+					{
+						displayPopUp("Names must contain only letters.", "Input Error");
+						return;
+					}
+					else if(!isAlpha(country))
+					{
+						displayPopUp("Countries must contain only letters.", "Input Error");
+						return;
+					}
+					else if(!isAlpha(passportId))
+					{
+						displayPopUp("Passport IDs must contain only letters.", "Input Error");
+						return;
+					}
+					else if(passportId.length() != PASSPORT_ID_LENGTH)
+					{
+
+						displayPopUp("Passport ID must be " + String.valueOf(PASSPORT_ID_LENGTH) + " characters long. ", "Input Error");
+						return;
+					}
 					//Execute the Query and Make Table
 					//Replace the string with your SQL Query
-					String query = "SELECT * FROM flight ORDER BY airId ASC LIMIT 100"; 
+					String query = "INSERT INTO Passenger (passNum, fullName, bdate, country) ";
+					query += "VALUES ( ";
+					query += "\'" + passportId + "\'" + ", ";
+					query += "\'" + name + "\'" + ", ";
+					query += "\'" + birthdate + "\'" + ", ";
+					query += "\'" + country + "\'" + ")";
+					//Get initial number of entries in Passengers
+					String passengerSeq = "pIDseq";
+					int latestOldID = getNumberOfPassengers();
+					if (latestOldID == -1)
+					{
+						displayPopUp("There was an error in adding the passenger. Please try again. Error Code: 0", "Error");
+					}
+					//Insert passenger info onto database
+					executeUpdate(query);	
+					//Check if passenger is inside the database
+					int latestNewID = getNumberOfPassengers();
+				        if (latestNewID > latestOldID)	
+					{
+						displayPopUp("Passenger added!", "Added Passenger");
+					}
+					else
+					{
+						displayPopUp("There was an error in adding the passenger. Please try again. Error Code:1", "Error");
+					}
 
-					//Create the Table
+					refreshPanel(panelIndex);
+					/*//Create the Table
 					if (queryDBTable != null)
 						PanelList.get(panelIndex).remove(queryDBTable);
 					queryDBTable.getViewport().add(createDBTable(query)); 
@@ -212,31 +359,51 @@ public class AirBooking extends JFrame{
 
 					//Refresh the frame to show the added table
 					validate(); 
-					repaint(); 
+					repaint();*/ 
 
 				}
 				catch(SQLException ex)
 				{
 					System.out.println(ex.getMessage());
+					System.out.println(ex.getErrorCode());
+					if (ex.getErrorCode() == 0)
+					{
+						displayPopUp("Passenger already exists!", "Error");
+					}
 				}
 			}
 		});
-
 		//Add components
-		PanelList.get(panelIndex).add(title);
+		PanelList.get(panelIndex).add(firstNameTxt);
+		PanelList.get(panelIndex).add(firstNameField);
+		PanelList.get(panelIndex).add(lastNameTxt);
+		PanelList.get(panelIndex).add(lastNameField);
+		PanelList.get(panelIndex).add(passportTxt);
+		PanelList.get(panelIndex).add(passportField);
+		PanelList.get(panelIndex).add(monthTxt);
+		PanelList.get(panelIndex).add(monthNum);
+		PanelList.get(panelIndex).add(dateTxt);
+		PanelList.get(panelIndex).add(dateNum);
+		PanelList.get(panelIndex).add(yearTxt);
+		PanelList.get(panelIndex).add(yearNum);
+		PanelList.get(panelIndex).add(countryTxt);
+		PanelList.get(panelIndex).add(countryField);
+
 		PanelList.get(panelIndex).add(submitButt);
-	
+			
 	}
 
 	/* 2) Book Flight */
 	private void createPanel2()
 	{
 		int panelIndex = 1;
+		int numPassengers = getNumberOfPassengers() - 1;
 		//Create components
 
 
 		JLabel passTxt = new JLabel("Passenger ID: ");
-		JSpinner passInput = createDigitSpinner(1,1, 9999);
+		JSpinner passInput = createDigitSpinner(1,0, numPassengers);
+		passInput.setValue(0);
 
 		JScrollPane queryDBTable = new JScrollPane();
 		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
@@ -251,11 +418,13 @@ public class AirBooking extends JFrame{
 		JLabel yearTxt = new JLabel("Year: ");
 
 
-		JSpinner monthNum = createDigitSpinner(1, 1, 12);
-		JSpinner dateNum = createDigitSpinner(1, 1, 31);
-		JSpinner yearNum = createDigitSpinner(2017, 1900, 9999);
+		JSpinner monthNum = createDigitSpinner(2, 1, 12);
+		JSpinner dateNum = createDigitSpinner(2, 1, 31);
+		JSpinner yearNum = createDigitSpinner(1900, 1900, 9999);
 
-
+		monthNum.setValue(1);	
+		dateNum.setValue(1);
+		yearNum.setValue(2017);
 
 		JButton submitButt = new JButton("Book Flight");
 		JButton searchButt = new JButton("Search for Available Flights");
@@ -420,19 +589,150 @@ public class AirBooking extends JFrame{
 	private void createPanel3()
 	{
 		int panelIndex = 2;
+		int numPassengers = getNumberOfPassengers() - 1;
 		JPanel Panel = new JPanel();
 		
+		//General information components
+		JLabel passengerIDTxt = new JLabel("Passenger ID");
+		JLabel flightNumTxt = new JLabel("Flight ID");
+		JLabel ratingTxt = new JLabel("Score");
+		
+		JTextField flightNumField = new JTextField(20);
+
+		JSpinner passengerIDSpinner = createDigitSpinner(1, 0, numPassengers);
+		JSpinner ratingSpinner = createDigitSpinner(1, 0, 5);
+		
+		passengerIDSpinner.setValue(0);
+		ratingSpinner.setValue(0);
 		//This is where you add all the components you need for that specific panel
 		//Crate comment text area
-		JTextArea comment = new JTextArea(10,50); //(height, width) 
-		comment.setText("This is for the comments section");
-		comment.setLineWrap(true); //Wrap the text inside the text area
-		comment.setWrapStyleWord(true); //So the words dont get broken up when it doesn't fit in the line
+		String commentBoxText = "Type your comments here.";
+		JTextArea commentBox = new JTextArea(10,80); //(height, width) 
+		commentBox.setText(commentBoxText);
+		commentBox.setLineWrap(true); //Wrap the text inside the text area
+		commentBox.setWrapStyleWord(true); //So the words dont get broken up when it doesn't fit in the line
+		commentBox.addFocusListener(new FocusListener() 
+		{
+			public void focusGained(FocusEvent e)
+			{
+				if(commentBox.getText().equals(commentBoxText))
+				{
+					commentBox.setText("");
+				}
+			}
+			
+			//Does nothing, but we need this since jswing requires both functions
+			public void focusLost(FocusEvent e)
+			{
+
+			}
+		});
+			
 		
 		//this scroll panel allows the text area to scroll on overflow as needed
-		JScrollPane commentScroll = new JScrollPane(comment, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane commentScroll = new JScrollPane(commentBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
+
+		JButton submitButt = new JButton("Submit"); //This button will run the query
+		submitButt.addActionListener(new ActionListener() //onclick function
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					//Validate Required Fields
+					int pID = Integer.valueOf(String.valueOf(passengerIDSpinner.getValue()));
+					String flightNum = flightNumField.getText();
+					String rating = String.valueOf(ratingSpinner.getValue());	
+				        String comment = commentBox.getText();
+					int score = Integer.valueOf(String.valueOf(ratingSpinner.getValue()));
+					
+					if(flightNum.isEmpty())
+					{
+						displayPopUp("Please enter a flight number.", "Input Error");
+						return;
+					}
+					if(comment == commentBoxText)
+					{
+						comment = "";
+					}
+					//Check if flight number exists
+					String query = "SELECT flightNum FROM Flight WHERE ";
+					query += "flightNum = \'" + flightNum + "\'";
+
+					int result = executeQuery(query);
+					if(result == 0)
+					{
+						displayPopUp("Flight number does not exist.", "Input Error");
+						return;
+					}
+					
+					//Check if passenger attended flight
+					query = "SELECT pID, flightnum FROM booking WHERE ";
+					query += "pID = " + pID + "AND ";
+					query += "flightNum = \'" + flightNum + "\'";
+					result = executeQuery(query);
+					if(result == 0)
+					{
+						displayPopUp("Passenger did not attend this flight!", "Submission1 Error");
+						return;
+					}
+					
+					//Check if passenger already reviewed this flight
+					query = "SELECT pID FROM ratings WHERE ";
+					query += "pID = " + pID;
+					query += " AND flightnum = \'" + flightNum + "\'";
+					result = executeQuery(query);
+
+					if(result > 0)
+					{
+						displayPopUp("There is already a review made by this passenger!", "Submission Error");
+						return;
+					}
+					
+					//Main Query
+					int latestOldRatingIDs = getNumberOfRatings();
+					query = "INSERT INTO Ratings (pID, flightNum, score, comment) ";
+					query += "VALUES( ";
+					query += pID + ", ";
+					query += "\'" + flightNum + "\'" + ", ";
+					query += "\'" + score + "\'" + ", ";
+					query += "\'" + comment + "\'" + ")";
+			
+					executeUpdate(query);
+					//Check if the comment went through	
+					int latestNewRatingIDs = getNumberOfRatings();
+					if(latestNewRatingIDs > latestOldRatingIDs)
+					{
+						displayPopUp("Review added!", "Success");
+					}
+					else
+					{
+						displayPopUp("There was an error in adding the review. Please try again.", "Error");
+					}
+					//Check if passenger is inside the database
+					refreshPanel(panelIndex);
+				}
+				catch(SQLException ex)
+				{
+					System.out.println(ex.getMessage());
+					System.out.println(ex.getErrorCode());
+					if (ex.getErrorCode() == 0)
+					{
+						displayPopUp("Internal error. Please try again.", "Error");
+					}
+				}
+			}
+		});
+		//Add components
+		PanelList.get(panelIndex).add(passengerIDTxt);
+		PanelList.get(panelIndex).add(passengerIDSpinner);
+		PanelList.get(panelIndex).add(flightNumTxt);
+		PanelList.get(panelIndex).add(flightNumField);
+		PanelList.get(panelIndex).add(ratingTxt);
+		PanelList.get(panelIndex).add(ratingSpinner);
 		PanelList.get(panelIndex).add(commentScroll);
+		PanelList.get(panelIndex).add(submitButt);
 	}
 	
 
@@ -516,8 +816,58 @@ public class AirBooking extends JFrame{
 	private void createPanel5()
 	{
 		int panelIndex = 4;
-		//PanelList.get(panelIndex)
-		//This is where you add all the components you need for that specific panel
+		//This is where you add all the components you need for that specific panel	
+		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
+		JLabel topDestsTxt = new JLabel("Please enter the number of popular destinations you would like to see:");
+	
+		JSpinner topDestsSpinner = createDigitSpinner(2, 1, 999);
+		topDestsSpinner.setValue(1);		
+
+		JButton submitButt = new JButton("Submit"); //This button will run the query
+		submitButt.addActionListener(new ActionListener() //onclick function
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					//Validate Required Fields
+				        int topDests = Integer.valueOf(String.valueOf(topDestsSpinner.getValue()));
+					
+				
+					//Execute the Query and Make Table
+					//Replace the string with your SQL Query
+					String query = "SELECT destination, COUNT(flightnum) AS flightamount ";
+					query += "FROM Flight ";
+					query += "GROUP BY destination ";
+					query += "ORDER BY COUNT(flightnum) DESC ";
+					query += "LIMIT " + Integer.toString(topDests);
+
+					//Create the Table
+					if (queryDBTable != null)
+						PanelList.get(panelIndex).remove(queryDBTable);
+					queryDBTable.getViewport().add(createDBTable(query)); 
+					PanelList.get(panelIndex).add(queryDBTable, BorderLayout.CENTER);
+
+					//Refresh the frame to show the added table
+					validate(); 
+					repaint();
+
+				}
+				catch(SQLException ex)
+				{
+					System.out.println(ex.getMessage());
+					System.out.println(ex.getErrorCode());
+					if (ex.getErrorCode() == 0)
+					{
+						displayPopUp("Internal error. Please contact support or try again.", "Error");
+					}
+				}
+			}
+		});
+		PanelList.get(panelIndex).add(topDestsTxt);
+		PanelList.get(panelIndex).add(topDestsSpinner);
+		PanelList.get(panelIndex).add(submitButt);
 	}
 
 	/* 6) List Highest Rated Destinations */
@@ -528,7 +878,8 @@ public class AirBooking extends JFrame{
 		JLabel title = new JLabel("Please enter how many top reviews you want to see: ");
 		JScrollPane queryDBTable = new JScrollPane();
 		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
-		JSpinner numRate = createDigitSpinner(1, 1, 9000);
+		JSpinner numRate = createDigitSpinner(2, 1, 9000);
+		numRate.setValue(1);
 		JButton submitButt = new JButton("Submit"); //This button will run the query
 		submitButt.addActionListener(new ActionListener() //onclick function
 		{
@@ -585,6 +936,96 @@ public class AirBooking extends JFrame{
 	{
 		int panelIndex = 6;
 		//This is where you add all the components you need for that specific panel
+		JScrollPane queryDBTable = new JScrollPane();
+		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
+		JLabel originTxt = new JLabel("Origin");
+		JLabel destinationTxt = new JLabel("Destination");
+		JLabel flightTxt = new JLabel("Flights to See:");
+
+		JTextField originField = new JTextField("Washington D.C.", 15);
+		JTextField destinationField = new JTextField("Havana", 15);
+		
+		JSpinner flightSpinner = createDigitSpinner(2, 1, 999);
+		flightSpinner.setValue(1);
+		JButton submitButt = new JButton("Submit"); //This button will run the query
+		submitButt.addActionListener(new ActionListener() //onclick function
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try
+				{
+					//Validate Required Fields
+					String origin = originField.getText();
+					String destination = destinationField.getText();
+					int flights = Integer.valueOf(String.valueOf(flightSpinner.getValue()));
+					if(origin.isEmpty())
+					{
+						displayPopUp("Please enter an origin.", "Input Error");
+						return;
+					}
+					else if(destination.isEmpty())
+					{
+						displayPopUp("Please enter a destination.", "Input Error");
+						return;
+					}
+					else if(!isAlpha(origin))
+					{
+						displayPopUp("Origins must contain letters.", "Input Error");
+						return;
+					}
+					else if(!isAlpha(destination))
+					{
+						displayPopUp("Destinations must contain letters.", "Input Error");
+						return;
+					}
+					String checkQuery = "SELECT destination FROM Flight WHERE destination = ";
+					checkQuery += "\'" + destination + "\'";
+					int result = executeQuery(checkQuery);
+					if(result == 0)
+					{
+						displayPopUp("There are no flights with the destination provided.", "Search Error");
+						return;
+					}	
+				
+					//Execute the Query and Make Table
+					//Replace the string with your SQL Query
+					String locationDuration = "SELECT name, flightNum, origin, destination, plane, duration ";
+					locationDuration += "FROM Airline, Flight ";
+					locationDuration += "WHERE Airline.airID = Flight.airId ";
+					locationDuration += "AND origin = \'" + origin + "\'";
+					locationDuration += "AND destination = \'" + destination + "\'";
+					locationDuration += "ORDER BY duration ";
+					locationDuration += "LIMIT " + flights; 
+
+					//Create the Table
+					if (queryDBTable != null)
+						PanelList.get(panelIndex).remove(queryDBTable);
+					queryDBTable.getViewport().add(createDBTable(locationDuration)); 
+					PanelList.get(panelIndex).add(queryDBTable, BorderLayout.CENTER);
+
+					//Refresh the frame to show the added table
+					validate(); 
+					repaint();
+
+				}
+				catch(SQLException ex)
+				{
+					System.out.println(ex.getMessage());
+					System.out.println(ex.getErrorCode());
+					if (ex.getErrorCode() == 0)
+					{
+						displayPopUp("Internal error. Please contact support or try again.", "Error");
+					}
+				}
+			}
+		});
+		PanelList.get(panelIndex).add(originTxt);
+		PanelList.get(panelIndex).add(originField);
+		PanelList.get(panelIndex).add(destinationTxt);
+		PanelList.get(panelIndex).add(destinationField);
+		PanelList.get(panelIndex).add(flightTxt);
+		PanelList.get(panelIndex).add(flightSpinner);
+		PanelList.get(panelIndex).add(submitButt);
 	}
 
 	/* 8) Find Number of Available Seats On a Given Flight */
@@ -598,10 +1039,12 @@ public class AirBooking extends JFrame{
 		JLabel yearTxt = new JLabel("Year: ");
 
 
-		JSpinner monthNum = createDigitSpinner(1, 1, 12);
-		JSpinner dateNum = createDigitSpinner(1, 1, 31);
-		JSpinner yearNum = createDigitSpinner(2017, 1900, 9999);
-			
+		JSpinner monthNum = createDigitSpinner(2, 1, 12);
+		JSpinner dateNum = createDigitSpinner(2, 1, 31);
+		JSpinner yearNum = createDigitSpinner(1900, 1900, 9999);
+		monthNum.setValue(1);	
+		dateNum.setValue(1);
+		yearNum.setValue(2017);		
 		JScrollPane queryDBTable = new JScrollPane();
 		queryDBTable.setPreferredSize(new Dimension(1200, 500)); //Sets the size of the table
 
@@ -1035,7 +1478,10 @@ public class AirBooking extends JFrame{
 			String country = in.readLine();
 			query += "VALUES ( " + "\'" + passportno + "\'" + ", " + "\'" + name + "\'" + ", " + "\'" + birthdate + "\'" + ", " + "\'" + country + "\'" + ")";
 			
-			esql.executeQuery(query);
+			esql.executeUpdate(query);
+			String insertQuery = "pIDseq";
+			int newid = esql.getCurrSeqVal(insertQuery);
+			System.out.println(String.valueOf(newid));
 			System.out.print("Passenger added!");
 		}catch(Exception e)
 		{

@@ -132,4 +132,54 @@ FROM 'bookings.csv'
 WITH DELIMITER ',';
 --SELECT * FROM Booking;
 
+--Inserting in sample data in order to show that queries work
+INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
+VALUES(48, 'AB368', 'Washington D.C.', 'Havana', 'Lockheed 1011', 400, 12);
 
+INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
+VALUES(2, 'AGA378', 'Washington D.C.', 'Havana', 'Airbus 380', 475, 8);
+
+INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
+VALUES(6, 'AA789', 'Washington D.C.', 'Havana', 'Boeing 747', 280, 22);
+
+
+
+--Sequence/Triggers for Passengers
+CREATE SEQUENCE pIDseq START WITH 50000;
+SELECT setval('pIDseq', (SELECT MAX(pID) FROM Passenger));
+
+CREATE OR REPLACE FUNCTION next_passenger_number()
+RETURNS "trigger" AS $inc_pass_num$
+BEGIN
+	NEW.pID = nextval('pIDseq');
+	RETURN NEW;
+END;
+$inc_pass_num$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER inc_pass_num
+	BEFORE INSERT ON Passenger
+	FOR EACH ROW
+	EXECUTE PROCEDURE next_passenger_number();
+
+--Sequence/Triggers for Ratings
+CREATE SEQUENCE rIDseq START WITH 50000;
+SELECT setval('rIDseq', (SELECT MAX(rID) FROM Ratings));
+
+CREATE OR REPLACE FUNCTION next_rating_number()
+RETURNS "trigger" AS $inc_rating_num$
+BEGIN
+	NEW.rID = nextval('rIDseq');
+	RETURN NEW;
+END;
+$inc_rating_num$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER inc_rating_num
+	BEFORE INSERT ON Ratings
+	FOR EACH ROW
+	EXECUTE PROCEDURE next_rating_number();
+
+--Permissions to use sequences
+GRANT USAGE, SELECT ON pIDseq TO username;
+GRANT USAGE, SELECT ON rIDseq TO username;
