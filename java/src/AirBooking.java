@@ -225,6 +225,8 @@ public class AirBooking extends JFrame{
 		int panelIndex = 0;
 		//Constant to define the exact length a passport ID needs to be.	
 		final int PASSPORT_ID_LENGTH = 10;
+		final int COUNTRY_ID_LENGTH = 24;
+		final int FULL_NAME_LENGTH = 24;
 		//This is where you add all the components you need for that specific panel
 		//Create components
 		
@@ -241,13 +243,24 @@ public class AirBooking extends JFrame{
 		JTextField countryField = new JTextField(20);
 
 		JTextField passportField = new JTextField(20);
-		//Limit number of characters of passport field to 1	
+		//Limit number of characters of passport field to 10	
 		passportField.addKeyListener(new KeyAdapter()
 		{
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
 				if(passportField.getText().length() >= PASSPORT_ID_LENGTH)
+					e.consume();
+			}
+		});
+		
+		//Limit number of characters of passport field to 1	
+		countryField.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if(countryField.getText().length() >= COUNTRY_ID_LENGTH)
 					e.consume();
 			}
 		});
@@ -316,12 +329,28 @@ public class AirBooking extends JFrame{
 						displayPopUp("Passport IDs must contain only letters.", "Input Error");
 						return;
 					}
+					else if(name.length() > FULL_NAME_LENGTH)
+					{
+						displayPopUp("The full name must be " + String.valueOf(FULL_NAME_LENGTH) + " characters long. ", "Input Error");
+						return;
+					}
 					else if(passportId.length() != PASSPORT_ID_LENGTH)
 					{
-
 						displayPopUp("Passport ID must be " + String.valueOf(PASSPORT_ID_LENGTH) + " characters long. ", "Input Error");
 						return;
 					}
+					
+					//Check if the passenger exists
+					String existsQuery = "SELECT passNum ";
+					existsQuery += "FROM Passenger ";
+					existsQuery += "WHERE passNum = " + "\'" + passportId + "\'";
+					int result = executeQuery(existsQuery);
+					if(result != 0)
+					{
+						displayPopUp("Passenger already exists!", "Input Error");
+						return;
+					}
+					
 					//Execute the Query and Make Table
 					//Replace the string with your SQL Query
 					String query = "INSERT INTO Passenger (passNum, fullName, bdate, country) ";
@@ -336,6 +365,7 @@ public class AirBooking extends JFrame{
 					if (latestOldID == -1)
 					{
 						displayPopUp("There was an error in adding the passenger. Please try again. Error Code: 0", "Error");
+						return;
 					}
 					//Insert passenger info onto database
 					executeUpdate(query);	
@@ -347,19 +377,11 @@ public class AirBooking extends JFrame{
 					}
 					else
 					{
-						displayPopUp("There was an error in adding the passenger. Please try again. Error Code:1", "Error");
+						displayPopUp("There was an error in adding the passenger. Please try again. Error Code: 1", "Error");
+						return;
 					}
 
 					refreshPanel(panelIndex);
-					/*//Create the Table
-					if (queryDBTable != null)
-						PanelList.get(panelIndex).remove(queryDBTable);
-					queryDBTable.getViewport().add(createDBTable(query)); 
-					PanelList.get(panelIndex).add(queryDBTable, BorderLayout.CENTER);
-
-					//Refresh the frame to show the added table
-					validate(); 
-					repaint();*/ 
 
 				}
 				catch(SQLException ex)
@@ -368,7 +390,7 @@ public class AirBooking extends JFrame{
 					System.out.println(ex.getErrorCode());
 					if (ex.getErrorCode() == 0)
 					{
-						displayPopUp("Passenger already exists!", "Error");
+						displayPopUp("There was an error in adding the passenger. Please try again. Error Code: 2", "Error");
 					}
 				}
 			}
