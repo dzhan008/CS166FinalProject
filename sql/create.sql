@@ -132,18 +132,6 @@ FROM 'bookings.csv'
 WITH DELIMITER ',';
 --SELECT * FROM Booking;
 
---Inserting in sample data in order to show that queries work
-INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
-VALUES(48, 'AB368', 'Washington D.C.', 'Havana', 'Lockheed 1011', 400, 12);
-
-INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
-VALUES(2, 'AGA378', 'Washington D.C.', 'Havana', 'Airbus 380', 475, 8);
-
-INSERT INTO Flight(airId, flightNum, origin, destination, plane, seats, duration)
-VALUES(6, 'AA789', 'Washington D.C.', 'Havana', 'Boeing 747', 280, 22);
-
-
-
 --Sequence/Triggers for Passengers
 CREATE SEQUENCE pIDseq START WITH 50000;
 SELECT setval('pIDseq', (SELECT MAX(pID) FROM Passenger));
