@@ -147,6 +147,18 @@ CREATE INDEX destination_idx ON Flight
 USING HASH
 (destination);
 
+CREATE INDEX departure_idx ON Booking
+USING HASH
+(departure);
+
+CREATE INDEX flightaid_idx ON Flight
+USING HASH
+(airID);
+
+CREATE INDEX airline_idx ON Airline
+USING HASH
+(airID);
+
 --Sequence/Triggers for Passengers
 CREATE SEQUENCE pIDseq START WITH 50000;
 SELECT setval('pIDseq', (SELECT MAX(pID) FROM Passenger));
