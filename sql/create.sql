@@ -132,6 +132,21 @@ FROM 'bookings.csv'
 WITH DELIMITER ',';
 --SELECT * FROM Booking;
 
+--Indexes
+
+--Hash used because flight nums, origins, destinations are not sorted
+CREATE INDEX flight_idx ON Flight
+USING HASH
+(flightNum);
+
+CREATE INDEX origin_idx ON Flight
+USING HASH
+(origin);
+
+CREATE INDEX destination_idx ON Flight
+USING HASH
+(destination);
+
 --Sequence/Triggers for Passengers
 CREATE SEQUENCE pIDseq START WITH 50000;
 SELECT setval('pIDseq', (SELECT MAX(pID) FROM Passenger));
