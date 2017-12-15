@@ -942,8 +942,8 @@ public class AirBooking extends JFrame{
 		JLabel destinationTxt = new JLabel("Destination");
 		JLabel flightTxt = new JLabel("Flights to See:");
 
-		JTextField originField = new JTextField("Washington D.C.", 15);
-		JTextField destinationField = new JTextField("Havana", 15);
+		JTextField originField = new JTextField("Beijing", 15);
+		JTextField destinationField = new JTextField("San Francisco", 15);
 		
 		JSpinner flightSpinner = createDigitSpinner(2, 1, 999);
 		flightSpinner.setValue(1);
@@ -1872,5 +1872,4 @@ public class AirBooking extends JFrame{
 	}
 
 }
-
 
